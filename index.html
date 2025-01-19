@@ -40,54 +40,15 @@
             transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 1s;
             transform: translate(-50%, -50%);
         }
+        /* Car Image */
         .car {
             position: absolute;
             left: 0;
             top: 50%;
             transform: translateY(-50%);
             width: 140px;
-            height: 60px;
-            background-color: #264653;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            height: 80px;
             transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-        }
-        /* Front bumper */
-        .car:before {
-            content: "";
-            position: absolute;
-            top: -20px;
-            left: 20px;
-            width: 100px;
-            height: 15px;
-            background-color: #2a9d8f;
-            border-radius: 5px;
-        }
-        /* Rear bumper */
-        .car:after {
-            content: "";
-            position: absolute;
-            bottom: -20px;
-            left: 20px;
-            width: 100px;
-            height: 15px;
-            background-color: #2a9d8f;
-            border-radius: 5px;
-        }
-        /* Wheels */
-        .car .wheel {
-            position: absolute;
-            bottom: -10px;
-            width: 20px;
-            height: 20px;
-            background-color: #264653;
-            border-radius: 50%;
-        }
-        .car .wheel.left {
-            left: 20px;
-        }
-        .car .wheel.right {
-            right: 20px;
         }
         /* Goal */
         .goal {
@@ -149,10 +110,7 @@
     <div class="goal" id="goal"></div>
     <div class="explosion" id="explosion"></div>
     <div class="message" id="message">GOAL! Thanks for Subscribing!</div>
-    <div class="car" id="car">
-        <div class="wheel left"></div>
-        <div class="wheel right"></div>
-    </div>
+    <img src="https://i.ibb.co/KL1snMR/Untitled-design-20250116-210401-0000.png" alt="Rocket League Octane Car" class="car" id="car" />
     <div class="ball" id="ball"></div>
     <div class="subscriber-count" id="subscriber-count">Subscribers: 0</div>
 
