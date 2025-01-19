@@ -29,16 +29,18 @@
             text-align: center;
             width: 100%;
         }
+        /* Ball Image */
         .ball {
             position: absolute;
             top: 50%;
             left: 50%;
             width: 100px;
             height: 100px;
-            background-color: #f4a261;
-            border-radius: 50%;
-            transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 1s;
+            background-image: url('https://i.imgflip.com/6kn7pg.png'); /* Replace with the ball image */
+            background-size: contain;
+            background-repeat: no-repeat;
             transform: translate(-50%, -50%);
+            transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 1s;
         }
         /* Car Image */
         .car {
@@ -133,9 +135,9 @@
             // Move the car to hit the ball
             car.style.transform = "translateX(90vw)";
 
-            // Move the ball into the air (make it go up)
+            // Move the ball into the air and spin it
             setTimeout(() => {
-                ball.style.transform = "translateY(-40vh)";  // Ball goes up when hit
+                ball.style.transform = "translateY(-40vh) rotate(720deg)";  // Ball goes up and spins
             }, 100);
 
             // Explosion effect
