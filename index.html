@@ -27,11 +27,9 @@
         @keyframes fall {
             0% {
                 top: -150px;
-                left: calc(10% + 80% * random());
             }
             100% {
                 top: 110vh;
-                left: calc(10% + 80% * random());
             }
         }
     </style>
@@ -45,15 +43,16 @@
         // YouTube API Setup
         const API_KEY = "AIzaSyC2U3iNh5DN5dGr_wiCxcYbA8tOxUWn6MQ"; // Replace with your API key
         const CHANNEL_ID = "UCOp1oJ0_R3R8HP3KbQpEVIg"; // Replace with your channel ID
-        const API_URL = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${UCOp1oJ0_R3R8HP3KbQpEVIg}&key=${AIzaSyC2U3iNh5DN5dGr_wiCxcYbA8tOxUWn6MQ}`;
+        const API_URL = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`;
 
         // Function to create bread falling animation
         function createBread() {
             const bread = document.createElement('img');
             bread.src = 'https://upload.wikimedia.org/wikipedia/commons/2/2c/Slice_of_bread.png';
             bread.className = 'bread';
-            bread.style.left = `${Math.random() * 100}vw`;
-            bread.style.animationDuration = `${2 + Math.random() * 3}s`;
+            bread.style.left = `${Math.random() * 100}vw`; // Random horizontal position
+            bread.style.animationDuration = `${2 + Math.random() * 3}s`; // Random fall speed
+            bread.style.animationName = 'fall';
             document.body.appendChild(bread);
 
             // Remove bread after animation
@@ -77,14 +76,26 @@
                     }
                 }
 
-                lastSubscriberCount = currentSubscriberCount;
+                lastSubscriberCount = currentSubscriberCount; // Update the last subscriber count
             } catch (error) {
                 console.error("Error fetching subscriber count:", error);
             }
         }
 
-        // Check subscribers every 10 seconds
-        setInterval(checkSubscribers, 10000);
+        // Fetch the initial subscriber count
+        async function initializeSubscriberCount() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                lastSubscriberCount = parseInt(data.items[0].statistics.subscriberCount);
+            } catch (error) {
+                console.error("Error initializing subscriber count:", error);
+            }
+        }
+
+        // Initialize and start checking subscribers
+        initializeSubscriberCount();
+        setInterval(checkSubscribers, 10000); // Check subscribers every 10 seconds
     </script>
 </body>
 </html>
