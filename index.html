@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe to See the Bread Fall!</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #fff5e6;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #d35400;
+        }
+        .bread {
+            position: absolute;
+            width: 100px;
+            animation: fall 3s linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                top: -150px;
+                left: calc(10% + 80% * random());
+            }
+            100% {
+                top: 110vh;
+                left: calc(10% + 80% * random());
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Subscribe to Make Bread Fall!</h1>
+
+    <script>
+        let lastSubscriberCount = 0; // To track the last subscriber count
+
+        // YouTube API Setup
+        const API_KEY = "YOUR_API_KEY"; // Replace with your API key
+        const CHANNEL_ID = "YOUR_CHANNEL_ID"; // Replace with your channel ID
+        const API_URL = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`;
+
+        // Function to create bread falling animation
+        function createBread() {
+            const bread = document.createElement('img');
+            bread.src = 'https://upload.wikimedia.org/wikipedia/commons/2/2c/Slice_of_bread.png';
+            bread.className = 'bread';
+            bread.style.left = `${Math.random() * 100}vw`;
+            bread.style.animationDuration = `${2 + Math.random() * 3}s`;
+            document.body.appendChild(bread);
+
+            // Remove bread after animation
+            bread.addEventListener('animationend', () => {
+                bread.remove();
+            });
+        }
+
+        // Function to check subscriber count
+        async function checkSubscribers() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                const currentSubscriberCount = parseInt(data.items[0].statistics.subscriberCount);
+
+                // Trigger bread animation if subscriber count increases
+                if (currentSubscriberCount > lastSubscriberCount) {
+                    const newSubscribers = currentSubscriberCount - lastSubscriberCount;
+                    for (let i = 0; i < newSubscribers; i++) {
+                        createBread();
+                    }
+                }
+
+                lastSubscriberCount = currentSubscriberCount;
+            } catch (error) {
+                console.error("Error fetching subscriber count:", error);
+            }
+        }
+
+        // Check subscribers every 10 seconds
+        setInterval(checkSubscribers, 10000);
+    </script>
+</body>
+</html>
