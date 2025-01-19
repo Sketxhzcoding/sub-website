@@ -43,35 +43,53 @@
         .car {
             position: absolute;
             left: 0;
-            top: 50%; /* Align the car on the same horizontal line as the ball */
-            transform: translateY(-50%); /* Ensure it’s vertically centered with the ball */
-            width: 120px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 140px;
             height: 60px;
-            background-color: #2a9d8f;
-            border-radius: 5px 5px 0 0;
-            transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+            background-color: #264653;
+            border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
         }
+        /* Front bumper */
         .car:before {
             content: "";
             position: absolute;
-            bottom: -10px;
-            left: 10px;
-            width: 20px;
-            height: 20px;
-            background-color: #264653;
-            border-radius: 50%;
+            top: -20px;
+            left: 20px;
+            width: 100px;
+            height: 15px;
+            background-color: #2a9d8f;
+            border-radius: 5px;
         }
+        /* Rear bumper */
         .car:after {
             content: "";
             position: absolute;
+            bottom: -20px;
+            left: 20px;
+            width: 100px;
+            height: 15px;
+            background-color: #2a9d8f;
+            border-radius: 5px;
+        }
+        /* Wheels */
+        .car .wheel {
+            position: absolute;
             bottom: -10px;
-            right: 10px;
             width: 20px;
             height: 20px;
             background-color: #264653;
             border-radius: 50%;
         }
+        .car .wheel.left {
+            left: 20px;
+        }
+        .car .wheel.right {
+            right: 20px;
+        }
+        /* Goal */
         .goal {
             position: absolute;
             top: 40%;
@@ -83,6 +101,7 @@
             background-color: transparent;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
+        /* Explosion effect */
         .explosion {
             position: absolute;
             top: 50%;
@@ -120,11 +139,14 @@
 </head>
 <body>
     <h1>Subscribe for a Rocket League Surprise!</h1>
-    <div class="goal" id="goal"></div> <!-- Rocket League goal -->
+    <div class="goal" id="goal"></div>
     <div class="explosion" id="explosion"></div>
     <div class="message" id="message">GOAL! Thanks for Subscribing!</div>
-    <div class="car" id="car"></div> <!-- Custom car -->
-    <div class="ball" id="ball"></div> <!-- Rocket League ball -->
+    <div class="car" id="car">
+        <div class="wheel left"></div>
+        <div class="wheel right"></div>
+    </div>
+    <div class="ball" id="ball"></div>
 
     <script>
         let lastSubscriberCount = 0;
