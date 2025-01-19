@@ -3,61 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subscribe to See the Bread Fall!</title>
+    <title>Subscribe for a Rocket League Surprise!</title>
     <style>
         body {
             margin: 0;
             overflow: hidden;
-            background-color: #fff5e6;
+            background-color: #1d3557;
             font-family: Arial, sans-serif;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
+            position: relative;
+            height: 100vh;
+            color: white;
         }
         h1 {
-            font-size: 3rem;
-            color: #d35400;
-        }
-        .bread {
             position: absolute;
-            width: 100px;
-            animation: fall 3s linear infinite;
+            font-size: 3rem;
+            color: #f4a261;
+            z-index: 10;
         }
-        @keyframes fall {
+        .ball {
+            position: absolute;
+            top: 50%;
+            left: -200px;
+            width: 150px;
+            transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 1s;
+        }
+        .explosion {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, orange, red, yellow, transparent);
+            border-radius: 50%;
+            animation: pulse 0.8s ease-out forwards;
+            display: none;
+        }
+        @keyframes pulse {
             0% {
-                top: -150px;
+                opacity: 0;
+                transform: scale(0.5);
             }
             100% {
-                top: 110vh;
+                opacity: 1;
+                transform: scale(1.5);
             }
+        }
+        .message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
         }
     </style>
 </head>
 <body>
-    <h1>Subscribe to Make Bread Fall!</h1>
+    <h1>Subscribe for a Rocket League Surprise!</h1>
+    <div class="explosion" id="explosion"></div>
+    <div class="message" id="message">GOAL! Thanks for Subscribing!</div>
 
     <script>
-        let lastSubscriberCount = 0; // To track the last subscriber count
+        let lastSubscriberCount = 0;
 
         // YouTube API Setup
         const API_KEY = "AIzaSyC2U3iNh5DN5dGr_wiCxcYbA8tOxUWn6MQ"; // Replace with your API key
         const CHANNEL_ID = "UCOp1oJ0_R3R8HP3KbQpEVIg"; // Replace with your channel ID
         const API_URL = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`;
 
-        // Function to create bread falling animation
-        function createBread() {
-            const bread = document.createElement('img');
-            bread.src = 'https://ebansbakehouse.com/cdn/shop/products/multigran_slice_2048x2048.png?v=1584828628';
-            bread.className = 'bread';
-            bread.style.left = `${Math.random() * 100}vw`; // Random horizontal position
-            bread.style.animationDuration = `${2 + Math.random() * 3}s`; // Random fall speed
-            bread.style.animationName = 'fall';
-            document.body.appendChild(bread);
+        // Function to create Rocket League animation
+        function showRocketLeagueGoal() {
+            const ball = document.createElement("img");
+            ball.src = "https://upload.wikimedia.org/wikipedia/en/a/a1/Rocket_League_coverart.jpg"; // Rocket League ball image
+            ball.className = "ball";
+            document.body.appendChild(ball);
 
-            // Remove bread after animation
-            bread.addEventListener('animationend', () => {
-                bread.remove();
+            // Move the ball across the screen
+            setTimeout(() => {
+                ball.style.transform = "translateX(110vw)";
+            }, 100);
+
+            // Explosion effect
+            setTimeout(() => {
+                const explosion = document.getElementById("explosion");
+                explosion.style.display = "block";
+
+                const message = document.getElementById("message");
+                message.style.opacity = 1;
+
+                setTimeout(() => {
+                    explosion.style.display = "none";
+                    message.style.opacity = 0;
+                }, 1500);
+            }, 2000);
+
+            // Remove the ball
+            ball.addEventListener("transitionend", () => {
+                ball.remove();
             });
         }
 
@@ -68,12 +117,9 @@
                 const data = await response.json();
                 const currentSubscriberCount = parseInt(data.items[0].statistics.subscriberCount);
 
-                // Trigger bread animation if subscriber count increases
+                // Trigger Rocket League goal if subscriber count increases
                 if (currentSubscriberCount > lastSubscriberCount) {
-                    const newSubscribers = currentSubscriberCount - lastSubscriberCount;
-                    for (let i = 0; i < newSubscribers; i++) {
-                        createBread();
-                    }
+                    showRocketLeagueGoal();
                 }
 
                 lastSubscriberCount = currentSubscriberCount; // Update the last subscriber count
