@@ -43,7 +43,8 @@
         .car {
             position: absolute;
             left: 0;
-            bottom: 10%;
+            top: 50%; /* Align the car on the same horizontal line as the ball */
+            transform: translateY(-50%); /* Ensure it’s vertically centered with the ball */
             width: 120px;
             height: 60px;
             background-color: #2a9d8f;
