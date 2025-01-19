@@ -16,7 +16,7 @@
             position: relative;
             height: 100vh;
             color: white;
-            background-image: url('https://yourimageurl.com/background.jpg'); /* Replace with your background image URL */
+            background-image: url('https://via.placeholder.com/1600x900'); /* Replace with your custom map background */
             background-size: cover;
             background-position: center;
         }
@@ -33,16 +33,43 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 150px;
-            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            background-color: #f4a261;
+            border-radius: 50%;
             transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 1s;
+            transform: translate(-50%, -50%);
         }
         .car {
             position: absolute;
             left: 0;
             bottom: 10%;
-            width: 150px;
+            width: 120px;
+            height: 60px;
+            background-color: #2a9d8f;
+            border-radius: 5px 5px 0 0;
             transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .car:before {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+            background-color: #264653;
+            border-radius: 50%;
+        }
+        .car:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background-color: #264653;
+            border-radius: 50%;
         }
         .explosion {
             position: absolute;
@@ -83,8 +110,8 @@
     <h1>Subscribe for a Rocket League Surprise!</h1>
     <div class="explosion" id="explosion"></div>
     <div class="message" id="message">GOAL! Thanks for Subscribing!</div>
-    <img src="https://yourimageurl.com/rocketleaguecar.png" alt="Car" class="car" id="car"> <!-- Replace with your car image -->
-    <img src="https://upload.wikimedia.org/wikipedia/en/a/a1/Rocket_League_coverart.jpg" alt="Rocket League Ball" class="ball" id="ball"> <!-- Rocket League ball image -->
+    <div class="car" id="car"></div> <!-- Custom car -->
+    <div class="ball" id="ball"></div> <!-- Rocket League ball -->
 
     <script>
         let lastSubscriberCount = 0;
