@@ -71,6 +71,17 @@
             background-color: #264653;
             border-radius: 50%;
         }
+        .goal {
+            position: absolute;
+            top: 40%;
+            right: 0;
+            width: 120px;
+            height: 80px;
+            border: 5px solid #f4a261;
+            border-radius: 10px;
+            background-color: transparent;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
         .explosion {
             position: absolute;
             top: 50%;
@@ -108,6 +119,7 @@
 </head>
 <body>
     <h1>Subscribe for a Rocket League Surprise!</h1>
+    <div class="goal" id="goal"></div> <!-- Rocket League goal -->
     <div class="explosion" id="explosion"></div>
     <div class="message" id="message">GOAL! Thanks for Subscribing!</div>
     <div class="car" id="car"></div> <!-- Custom car -->
@@ -131,9 +143,9 @@
             // Move the car to hit the ball
             car.style.transform = "translateX(90vw)";
 
-            // Move the ball to the goal
+            // Move the ball into the air (make it go up)
             setTimeout(() => {
-                ball.style.transform = "translateX(30vw)";
+                ball.style.transform = "translateY(-40vh)";  // Ball goes up when hit
             }, 100);
 
             // Explosion effect
