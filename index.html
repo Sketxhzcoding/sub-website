@@ -14,7 +14,7 @@
             align-items: center;
             position: relative;
             height: 100vh;
-            background: #4CAF50; /* Grass color */
+            background: #4CAF50;
         }
 
         .field {
@@ -27,48 +27,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: -1; /* Make sure the field is behind the car and ball */
-        }
-
-        .center-circle {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 120px;
-            height: 120px;
-            border: 3px solid white;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .halfway-line {
-            position: absolute;
-            top: 50%;
-            left: 5%;
-            width: 90%;
-            height: 2px;
-            background-color: white;
-        }
-
-        .goal-zone-left, .goal-zone-right {
-            position: absolute;
-            top: 0;
-            width: 10%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .goal-zone-left {
-            left: 0;
-        }
-
-        .goal-zone-right {
-            right: 0;
+            z-index: -1;
         }
 
         .goal {
             position: absolute;
-            top: 50%; /* Center the goal vertically */
+            top: 40%;
             right: 0;
             width: 160px;
             height: 100px;
@@ -85,32 +49,29 @@
             color: white;
         }
 
-        /* Ball Image */
         .ball {
             position: absolute;
             top: 50%;
             left: 50%;
             width: 100px;
             height: 100px;
-            background-image: url('https://i.imgflip.com/6kn7pg.png'); /* Ball image */
+            background-image: url('https://i.imgflip.com/6kn7pg.png');
             background-size: contain;
             background-repeat: no-repeat;
             transform: translate(-50%, -50%);
             transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 1s;
         }
 
-        /* Car Image */
         .car {
             position: absolute;
             left: 0;
             top: 50%;
             transform: translateY(-50%);
-            width: 300px; /* Car width increased to 300px */
-            height: auto; /* Height adjusted proportionally */
+            width: 300px;
+            height: auto;
             transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
         }
 
-        /* Explosion effects */
         .explosion {
             position: absolute;
             top: 50%;
@@ -122,18 +83,6 @@
             border-radius: 50%;
             animation: pulse 0.8s ease-out forwards;
             display: none;
-        }
-
-        .explosion1 {
-            background: radial-gradient(circle, #ff5722, #e91e63, #ff9800);
-        }
-
-        .explosion2 {
-            background: radial-gradient(circle, #4caf50, #81c784, #66bb6a);
-        }
-
-        .explosion3 {
-            background: radial-gradient(circle, #9c27b0, #e040fb, #d500f9);
         }
 
         @keyframes pulse {
@@ -161,17 +110,16 @@
 
         .subscriber-count {
             position: absolute;
-            top: 200px; /* Adjusted for better alignment */
+            top: 20px;
             font-size: 2rem;
             font-weight: bold;
             color: #f4a261;
             text-align: center;
         }
 
-        /* Chat container */
         .chat-container {
             position: absolute;
-            top: 160px; /* Moved down to prevent overlap with header */
+            top: 160px;
             left: 20px;
             width: 300px;
             height: 400px;
@@ -182,13 +130,13 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
             color: #fff;
         }
+
         .chat-message {
             font-size: 1rem;
             margin: 5px 0;
             color: #f4a261;
         }
 
-        /* Header */
         h1 {
             position: absolute;
             top: 20px;
@@ -198,53 +146,22 @@
             font-weight: bold;
             color: #fff;
             text-align: center;
-            white-space: nowrap; /* Prevent line breaks */
-        }
-
-        /* Test Button */
-        #testButton {
-            position: absolute;
-            bottom: 50px;
-            font-size: 1.5rem;
-            padding: 10px 20px;
-            background-color: #f4a261;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        #testButton:hover {
-            background-color: #e08e58;
+            white-space: nowrap;
         }
     </style>
 </head>
 <body>
     <h1>Subscribe for a Rocket League Surprise!</h1>
     <div class="field">
-        <div class="halfway-line"></div>
-        <div class="center-circle"></div>
-        <div class="goal-zone-left"></div>
-        <div class="goal-zone-right"></div>
         <div class="goal" id="goal">GOAL!</div>
-        <div class="explosion explosion1" id="explosion1"></div>
-        <div class="explosion explosion2" id="explosion2"></div>
-        <div class="explosion explosion3" id="explosion3"></div>
-        <div class="message" id="message">GOAL! Thanks for Subscribing!</div>
+        <div class="explosion" id="explosion"></div>
+        <div class="message" id="message">Thanks for Subscribing!</div>
         <img src="https://i.ibb.co/99nc7xj/Untitled-design-20250119-192011-0000.png" alt="Rocket League Car" class="car" id="car" />
         <div class="ball" id="ball"></div>
     </div>
 
     <div class="subscriber-count" id="subscriber-count">Subscribers: 0</div>
-
-    <!-- Chat Container -->
-    <div class="chat-container" id="chat-container">
-        <!-- Chat messages will appear here -->
-    </div>
-
-    <!-- Test Button -->
-    <button id="testButton">Test Goal Animation</button>
+    <div class="chat-container" id="chat-container"></div>
 
     <script>
         let lastSubscriberCount = 0;
@@ -265,43 +182,48 @@
         ];
 
         // YouTube API Setup
-        const API_KEY = "AIzaSyC2U3iNh5DN5dGr_wiCxcYbA8tOxUWn6MQ"; // Replace with your API key
-        const CHANNEL_ID = "UCOp1oJ0_R3R8HP3KbQpEVIg"; // Replace with your channel ID
+        const API_KEY = "AIzaSyC2U3iNh5DN5dGr_wiCxcYbA8tOxUWn6MQ";
+        const CHANNEL_ID = "UCOp1oJ0_R3R8HP3KbQpEVIg";
         const API_URL = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`;
 
-        // Function to create Rocket League goal animation
-        function showRocketLeagueGoal() {
+        // Function to create Rocket League explosion
+        function showExplosion() {
+            const explosion = document.getElementById("explosion");
+            explosion.style.display = "block";
+            setTimeout(() => {
+                explosion.style.display = "none";
+            }, 1000);
+        }
+
+        // Function to animate car emote (flip or dance)
+        function carEmote() {
             const car = document.getElementById("car");
-            const ball = document.getElementById("ball");
-            const explosions = [document.getElementById("explosion1"), document.getElementById("explosion2"), document.getElementById("explosion3")];
+            car.style.transform = "translateX(80vw) rotate(720deg)"; // Car flips
+
+            // After emote is done, start replay
+            setTimeout(() => {
+                showReplay();
+            }, 2000);
+        }
+
+        // Function for replay effect
+        function showReplay() {
+            const car = document.getElementById("car");
             const message = document.getElementById("message");
 
-            // Move the ball towards the goal
-            ball.style.transition = "transform 2s ease-in-out";
-            ball.style.transform = "translateX(50vw)"; // Ball moves towards the goal
+            // Zoom in on the car
+            car.style.transform = "translateX(50vw) scale(1.5)";
 
+            // Show the message after replay
             setTimeout(() => {
-                // Random explosion effect
-                const randomExplosion = explosions[Math.floor(Math.random() * explosions.length)];
-                randomExplosion.style.display = "block";
+                message.style.opacity = 1;
+            }, 500);
 
-                // Trigger explosion animation
-                setTimeout(() => {
-                    randomExplosion.style.display = "none";
-                    message.style.opacity = 1;
-
-                    // Ball flies back to its starting position
-                    ball.style.transition = "transform 2s ease-in-out";
-                    ball.style.transform = "translateX(-50vw)"; // Ball returns to the starting position
-
-                    // Trigger car flip and blast effect
-                    car.style.transform = "translateX(90vw) rotate(720deg)"; // Car flips in the air
-                    setTimeout(() => {
-                        car.style.transform = "translateX(0)"; // Reset the car
-                        message.style.opacity = 0;
-                    }, 1500);
-                }, 1000);
-            }, 2000);
+            // Return car back to its original position
+            setTimeout(() => {
+                car.style.transform = "translateX(0) scale(1)";
+                message.style.opacity = 0;
+            }, 2500);
         }
 
         // Function to update subscriber count and show the message
@@ -315,9 +237,10 @@
                 const subscriberCountElement = document.getElementById("subscriber-count");
                 subscriberCountElement.textContent = `Subscribers: ${currentSubscriberCount}`;
 
-                // Trigger Rocket League goal if subscriber count increases
+                // Trigger Rocket League explosion and emote if subscriber count increases
                 if (currentSubscriberCount > lastSubscriberCount) {
-                    showRocketLeagueGoal();
+                    showExplosion();
+                    carEmote();
                     displayChatMessage(getRandomSubscriberMessage());
                 }
 
@@ -330,4 +253,41 @@
         // Function to get a random subscriber message
         function getRandomSubscriberMessage() {
             const randomIndex = Math.floor(Math.random() * subscriberMessages.length);
-            return
+            return subscriberMessages[randomIndex];
+        }
+
+        // Function to add a message to the chat
+        function displayChatMessage(message) {
+            const chatContainer = document.getElementById("chat-container");
+
+            // Create a new message element
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("chat-message");
+            messageElement.textContent = `Subscriber: ${message}`;
+
+            // Add the message to the chat container
+            chatContainer.appendChild(messageElement);
+
+            // Scroll the chat to the bottom
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Fetch the initial subscriber count
+        async function initializeSubscriberCount() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                currentSubscriberCount = parseInt(data.items[0].statistics.subscriberCount);
+                lastSubscriberCount = currentSubscriberCount;
+                document.getElementById("subscriber-count").textContent = `Subscribers: ${currentSubscriberCount}`;
+            } catch (error) {
+                console.error("Error initializing subscriber count:", error);
+            }
+        }
+
+        // Initialize and start checking subscribers
+        initializeSubscriberCount();
+        setInterval(checkSubscribers, 10000); // Check subscribers every 10 seconds
+    </script>
+</body>
+</html>
