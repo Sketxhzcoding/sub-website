@@ -82,12 +82,19 @@
             position: absolute;
             top: 40%;
             right: 0;
-            width: 120px;
-            height: 80px;
+            width: 160px;
+            height: 100px;
             border: 5px solid #f4a261;
-            border-radius: 10px;
-            background-color: transparent;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            background-color: #f4a261;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
         }
 
         /* Ball Image */
@@ -110,8 +117,8 @@
             left: 0;
             top: 50%;
             transform: translateY(-50%);
-            width: 300px;  /* Normal car size */
-            height: 200px; /* Normal car size */
+            width: 300px;  /* Car width increased to 300px */
+            height: auto; /* Height adjusted proportionally */
             transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
         }
 
@@ -154,10 +161,11 @@
 
         .subscriber-count {
             position: absolute;
-            top: 120px;  /* Moved down to avoid overlap */
+            top: 200px;  /* Adjusted for better alignment */
             font-size: 2rem;
             font-weight: bold;
             color: #f4a261;
+            text-align: center;
         }
 
         /* Chat container */
@@ -186,9 +194,11 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: bold;
             color: #fff;
+            text-align: center;
+            white-space: nowrap; /* Prevent line breaks */
         }
     </style>
 </head>
@@ -199,7 +209,7 @@
         <div class="center-circle"></div>
         <div class="goal-zone-left"></div>
         <div class="goal-zone-right"></div>
-        <div class="goal" id="goal"></div>
+        <div class="goal" id="goal">GOAL!</div>
         <div class="explosion" id="explosion"></div>
         <div class="message" id="message">GOAL! Thanks for Subscribing!</div>
         <img src="https://i.ibb.co/99nc7xj/Untitled-design-20250119-192011-0000.png" alt="Rocket League Car" class="car" id="car" />
