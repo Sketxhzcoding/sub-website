@@ -259,11 +259,6 @@
             "RocketFan123", "GoalMaster42", "SubForRL", "BoostedPlayerX", "CarTamer100", "RLChampion", "SoccerStar21", "Ballista57", "TurboSlayer", "EpicGamer43"
         ];
 
-        // YouTube API Setup
-        const API_KEY = "AIzaSyC2U3iNh5DN5dGr_wiCxcYbA8tOxUWn6MQ"; // Replace with your API key
-        const CHANNEL_ID = "UCOp1oJ0_R3R8HP3KbQpEVIg"; // Replace with your channel ID
-        const API_URL = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`;
-
         // Function to create Rocket League goal animation
         function showRocketLeagueGoal() {
             const car = document.getElementById("car");
@@ -297,46 +292,47 @@
             }, 2000);
         }
 
-        // Function to update subscriber count and show the message
-        async function checkSubscribers() {
-            try {
-                const response = await fetch(API_URL);
-                const data = await response.json();
-                currentSubscriberCount = parseInt(data.items[0].statistics.subscriberCount);
-
-                // Update the displayed subscriber count
-                const subscriberCountElement = document.getElementById("subscriber-count");
-                subscriberCountElement.textContent = `Subscribers: ${currentSubscriberCount}`;
-
-                // Trigger Rocket League goal if subscriber count increases
-                if (currentSubscriberCount > lastSubscriberCount) {
-                    showRocketLeagueGoal();
-                    displayChatMessage(getRandomSubscriberMessage(), getRandomUsername());
-                }
-
-                lastSubscriberCount = currentSubscriberCount; // Update the last subscriber count
-            } catch (error) {
-                console.error("Error fetching subscriber count:", error);
-            }
-        }
-
-        // Function to get a random subscriber message
-        function getRandomSubscriberMessage() {
-            const randomIndex = Math.floor(Math.random() * subscriberMessages.length);
-            return subscriberMessages[randomIndex];
-        }
-
-        // Function to get a random username
-        function getRandomUsername() {
-            const randomIndex = Math.floor(Math.random() * randomUsernames.length);
-            return randomUsernames[randomIndex];
-        }
-
-        // Function to add a message to the chat
-        function displayChatMessage(message, username) {
+        // Function to display random subscriber message in chat
+        function displayChatMessage() {
             const chatContainer = document.getElementById("chat-container");
 
-            // Create a new message element
-            const messageElement = document.createElement("div");
-            messageElement.classList.add("chat-message");
-            messageElement.textContent = `${username}: ${
+            // Get random username and message
+            const randomUsername = randomUsernames[Math.floor(Math.random() * randomUsernames.length)];
+            const randomMessage = subscriberMessages[Math.floor(Math.random() * subscriberMessages.length)];
+
+            // Create a new chat message element
+            const chatMessageElement = document.createElement("div");
+            chatMessageElement.classList.add("chat-message");
+            chatMessageElement.textContent = `${randomUsername}: ${randomMessage}`;
+
+            // Append to chat container
+            chatContainer.appendChild(chatMessageElement);
+
+            // Scroll to bottom
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Function to update subscriber count and show the message
+        function checkSubscribers() {
+            // Simulate subscriber count increase and display the goal animation
+            if (currentSubscriberCount > lastSubscriberCount) {
+                showRocketLeagueGoal();
+                displayChatMessage();
+            }
+
+            // Update subscriber count on the page
+            const subscriberCountElement = document.getElementById("subscriber-count");
+            subscriberCountElement.textContent = `Subscribers: ${currentSubscriberCount}`;
+
+            lastSubscriberCount = currentSubscriberCount; // Update the last subscriber count
+        }
+
+        // Simulate the subscriber count increasing over time
+        setInterval(() => {
+            currentSubscriberCount++;
+            checkSubscribers();
+        }, 5000); // Increment subscriber count every 5 seconds for demo
+
+    </script>
+</body>
+</html>
