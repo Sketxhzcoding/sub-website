@@ -40,18 +40,6 @@
             transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
         }
 
-        .ball {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background-color: #fff;
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            transition: transform 2s ease-out;
-        }
-
         .message {
             position: absolute;
             top: 50%;
@@ -97,6 +85,16 @@
             animation: fall 1.5s ease-out forwards;
         }
 
+        .ball {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: auto;
+            transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+        }
+
         @keyframes explode {
             0% {
                 opacity: 1;
@@ -124,7 +122,7 @@
     <h1>Subscribe for a Rocket League Surprise!</h1>
     <div class="field">
         <img src="https://i.ibb.co/99nc7xj/Untitled-design-20250119-192011-0000.png" alt="Rocket League Car" class="car" id="car" />
-        <div class="ball" id="ball"></div>
+        <img src="https://i.ibb.co/NY1qV4r/rocket-league-ball.png" alt="Rocket League Ball" class="ball" id="ball" />
         <div class="message" id="message">Thanks for Subscribing!</div>
     </div>
     <div class="subscriber-count" id="subscriber-count">Subscribers: Loading...</div>
@@ -193,25 +191,10 @@
             }
         }
 
-        function moveBall() {
-            const ball = document.getElementById("ball");
-            ball.style.transition = "transform 2s ease-out";
-            ball.style.transform = "translate(-50%, -150%)"; // Move the ball out of screen
-        }
-
-        function resetBall() {
-            const ball = document.getElementById("ball");
-            ball.style.transition = "none";
-            ball.style.transform = "translate(-50%, -50%)"; // Reset the ball position
-            setTimeout(() => {
-                ball.style.transition = "transform 2s ease-out";
-            }, 50);
-        }
-
         function showRocketLeagueSurprise() {
             const car = document.getElementById("car");
-            const message = document.getElementById("message");
             const ball = document.getElementById("ball");
+            const message = document.getElementById("message");
 
             message.textContent = thankYouMessages[Math.floor(Math.random() * thankYouMessages.length)];
             message.style.opacity = 1;
@@ -219,14 +202,17 @@
             car.style.transition = "transform 2s linear";
             car.style.transform = "translateX(calc(100vw - 320px))";
 
-            moveBall();
+            ball.style.transition = "transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67)";
+            ball.style.transform = "translateX(calc(100vw - 150px))";  // Ball moves with the car
+
             playRandomSoundEffect();
             triggerFireworks();
 
             setTimeout(() => {
-                resetBall();
                 car.style.transition = "none";
                 car.style.transform = "translateX(20px)";
+                ball.style.transition = "none";
+                ball.style.transform = "translate(-50%, -50%)"; // Reset ball to center
                 message.style.opacity = 0;
             }, 3000);
         }
