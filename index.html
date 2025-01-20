@@ -368,22 +368,25 @@
 
     <script>
     // Function to enter full-screen mode
-    function enterFullScreen() {
-        if (document.documentElement.requestFullscreen) {
-            document.documentElement.requestFullscreen();
-        } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-            document.documentElement.mozRequestFullScreen();
-        } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-            document.documentElement.webkitRequestFullscreen();
-        } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-            document.documentElement.msRequestFullscreen();
-        }
+function enterFullScreen() {
+    if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+    } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+        document.documentElement.mozRequestFullScreen();
+    } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari, Opera
+        document.documentElement.webkitRequestFullscreen();
+    } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+        document.documentElement.msRequestFullscreen();
     }
+}
 
-    // Attach the function to the Send button
-    document.querySelector('.chat-input button').addEventListener('click', function() {
+// Ensure the fullscreen mode request is tied to a user action
+document.querySelector('.chat-input button').addEventListener('click', function() {
+    // Ensure the event is triggered after the page is ready for fullscreen
+    setTimeout(() => {
         enterFullScreen();
-    });
+    }, 100);
+});
     </script>
 </body>
 </html>
