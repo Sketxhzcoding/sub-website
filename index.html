@@ -120,117 +120,26 @@
         const youtubeChannelId = 'UCOp1oJ0_R3R8HP3KbQpEVIg'; // Replace with your YouTube channel ID
         const apiKey = 'AIzaSyC2U3iNh5DN5dGr_wiCxcYbA8tOxUWn6MQ'; // Replace with your YouTube Data API key
 
-    
-const thankYouMessages = [
-    "You're a legend! Thanks for Subscribing!",
-    "Rocket League fan? Thanks for joining the squad!",
-    "You rock! Thanks for Subscribing!",
-    "Thanks for Subscribing! You're awesome!",
-    "Welcome to the team! Thanks for Subscribing!",
-    "Boosting into greatness! Thanks for joining!",
-    "You're flipping amazing! Thanks for Subscribing!",
-    "Welcome, MVP! Thanks for Subscribing!",
-    "You just scored big! Thanks for Subscribing!",
-    "Top-tier play! Thanks for Subscribing!",
-    "Your support is a power-up! Thanks for Subscribing!",
-    "Champion status unlocked! Thanks for joining!",
-    "Aerial hit! Thanks for Subscribing!",
-    "You're on fire! Thanks for Subscribing!",
-    "Legendary save! Thanks for Subscribing!",
-    "Dribble your way to greatness! Thanks for Subscribing!",
-    "Epic goal! Thanks for Subscribing!",
-    "You're GOAT material! Thanks for Subscribing!",
-    "GG! Thanks for Subscribing!",
-    "Unlimited boost for you! Thanks for Subscribing!",
-    "You're making waves! Thanks for Subscribing!",
-    "Bumped into awesomeness! Thanks for Subscribing!",
-    "You're turbo-charged! Thanks for Subscribing!",
-    "Making plays! Thanks for joining!",
-    "Flying high! Thanks for Subscribing!",
-    "You're a clutch player! Thanks for Subscribing!",
-    "Turbo boost activated! Thanks for Subscribing!",
-    "Goal explosion! Thanks for joining!",
-    "Welcome to the pitch! Thanks for Subscribing!",
-    "You're unstoppable! Thanks for Subscribing!",
-    "Epic play! Thanks for joining us!",
-    "You're part of the team now! Thanks for Subscribing!",
-    "Calculated! Thanks for Subscribing!",
-    "Rocketing into greatness! Thanks for Subscribing!",
-    "Your sub = goal explosion! Thanks!",
-    "Thanks for Subscribing! You’re the real MVP!",
-    "What a save! Thanks for Subscribing!",
-    "You’re boosting us to the top! Thanks!",
-    "Joining the squad? You’re amazing!",
-    "Another win thanks to you! Subscribed!",
-    "Scoring big with that subscription! Thanks!",
-    "Thanks for Subscribing! You’re top-tier!",
-    "Dribbling into greatness! Thanks for Subscribing!",
-    "You’re boosting our day! Thanks for Subscribing!",
-    "Welcome, Rocket League master! Thanks for Subscribing!",
-    "Flipping into our team? Awesome! Thanks!",
-    "An epic save! Thanks for Subscribing!",
-    "You’re making us go supersonic! Thanks!",
-    "One more sub closer to victory! Thanks!",
-    "You’re lighting up the scoreboard! Subscribed!",
-    "Goal explosion incoming! Thanks for Subscribing!",
-    "Your sub = instant replay-worthy! Thanks!",
-    "Amazing aerial hit! Thanks for Subscribing!",
-    "From the corner to the net! Thanks for Subscribing!",
-    "Bumping our way to greatness! Thanks!",
-    "Unlimited boost because you subscribed!",
-    "Thanks for Subscribing, Rocket League star!",
-    "Fast break to the top! Thanks for Subscribing!",
-    "Epic goal animation unlocked! Thanks!",
-    "Boost your game, join our team! Thanks!",
-    "Thanks for Subscribing! Your support is a game-changer!",
-    "Subbed? That’s a highlight reel moment!",
-    "Turbo speed into our squad! Thanks for Subscribing!",
-    "Calculated play: You subscribed! Thanks!",
-    "Mid-field pass to epic sub! Thanks!",
-    "What a shot! Thanks for Subscribing!",
-    "On the wall, ready to score: Thanks for Subscribing!",
-    "Master of the pitch? Thanks for Subscribing!",
-    "You’re scoring points IRL! Thanks for Subscribing!",
-    "Rocket-powered thanks for Subscribing!",
-    "Another amazing sub—thank you!",
-    "Boost meter full because you subscribed!",
-    "The perfect assist: Your subscription!",
-    "Power shot unlocked! Thanks for Subscribing!",
-    "That was clutch! Thanks for Subscribing!",
-    "Scoring big on the sub list! Thanks!",
-    "Rocket League all-star? Thanks for Subscribing!",
-    "Your sub made the highlight reel! Thanks!",
-    "Supersonic sub detected! Thanks!",
-    "Welcome to the Rocket League family! Thanks!",
-    "You’re our MVP! Thanks for Subscribing!",
-    "Kickoff goal moment: You subscribed!",
-    "Goal explosion worthy! Thanks for Subscribing!",
-    "Perfect setup for the sub! Thanks!",
-    "Pinch shot: You subscribed! Thanks!",
-    "We’re on a streak thanks to you! Subscribed!",
-    "Epic save from boredom: Thanks for Subscribing!",
-    "Boost pad activated: Thanks for Subscribing!",
-    "You’re on fire! Thanks for Subscribing!",
-    "Making plays with your sub! Thanks!",
-    "Air dribble into greatness: Thanks!",
-    "Your sub = a flawless victory!",
-    "Sub hype! Thanks for Subscribing!",
-    "The best play of the day: Thanks for Subscribing!",
-    "Rocket-powered thanks for your sub!",
-    "Calculated greatness! Thanks for Subscribing!",
-    "Hitting the scoreboard with your sub!",
-    "Infinite boost for you! Thanks for Subscribing!",
-    "Making history with your sub! Thanks!",
-    "Scored a goal IRL: You subscribed!",
-    "Bumped into greatness! Thanks for Subscribing!",
-    "Another Rocket League legend joins us! Thanks!",
-    "The ultimate sub just landed: Thanks!",
-    "You’re in our highlight reel now! Thanks!",
-    "Double-tap of greatness: You subscribed!",
-    "We’re flipping out! Thanks for Subscribing!",
-    "Rocket-fueled thanks for your sub!"
-];
+        const thankYouMessages = [
+            "You're a legend! Thanks for Subscribing!",
+            "Rocket League fan? Thanks for joining the squad!",
+            "You rock! Thanks for Subscribing!",
+            "Thanks for Subscribing! You're awesome!",
+            "Welcome to the team! Thanks for Subscribing!"
+        ];
 
+        const soundEffects = [
+            "https://www.myinstants.com/media/sounds/john-cena-entrance.mp3",
+            "https://www.myinstants.com/media/sounds/bruh.mp3",
+            "https://www.myinstants.com/media/sounds/metal-pipe.mp3",
+            "https://www.myinstants.com/media/sounds/anime-wow.mp3",
+            "https://www.myinstants.com/media/sounds/vine-boom.mp3",
+            "https://www.myinstants.com/media/sounds/minecraft-villager.mp3",
+            "https://www.myinstants.com/media/sounds/omg-sound-effect.mp3",
+            "https://www.myinstants.com/media/sounds/mario-coin.mp3",
+            "https://www.myinstants.com/media/sounds/applause.mp3",
+            "https://www.myinstants.com/media/sounds/fbi-open-up.mp3"
+        ];
 
         let lastSubscriberCount = 0;
 
@@ -250,8 +159,9 @@ const thankYouMessages = [
         fetchSubscriberCount();
         setInterval(fetchSubscriberCount, 60000);
 
-        function playSoundEffect() {
-            const audio = new Audio('https://github.com/Sketxhzcoding/sub-website/blob/main/bruh-made-with-Voicemod.mp3'); // Replace with Rocket League sound
+        function playRandomSoundEffect() {
+            const randomSound = soundEffects[Math.floor(Math.random() * soundEffects.length)];
+            const audio = new Audio(randomSound);
             audio.play();
         }
 
@@ -279,23 +189,6 @@ const thankYouMessages = [
             }
         }
 
-        function createConfetti() {
-            for (let i = 0; i < 50; i++) {
-                const confetti = document.createElement("div");
-                confetti.className = "confetti";
-                confetti.style.left = `${Math.random() * window.innerWidth}px`;
-                confetti.style.top = `0`;
-                confetti.style.width = `10px`;
-                confetti.style.height = `30px`;
-                confetti.style.backgroundColor = Math.random() > 0.5 ? "#0057FF" : "#FF6600";
-                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-
-                document.body.appendChild(confetti);
-
-                setTimeout(() => confetti.remove(), 1500);
-            }
-        }
-
         function showRocketLeagueSurprise() {
             const car = document.getElementById("car");
             const message = document.getElementById("message");
@@ -306,9 +199,8 @@ const thankYouMessages = [
             car.style.transition = "transform 2s linear";
             car.style.transform = "translateX(calc(100vw - 320px))";
 
-            playSoundEffect();
+            playRandomSoundEffect();
             triggerFireworks();
-            createConfetti();
 
             setTimeout(() => {
                 car.style.transition = "none";
