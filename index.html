@@ -33,7 +33,7 @@
         /* Car Image */
         .car {
             position: absolute;
-            left: -300px; /* Start off-screen */
+            left: 0; /* Start on the left side */
             top: 50%;
             transform: translateY(-50%);
             width: 300px;
@@ -103,6 +103,15 @@
         const youtubeChannelId = 'UCOp1oJ0_R3R8HP3KbQpEVIg'; // Replace with your YouTube channel ID
         const apiKey = 'AIzaSyC2U3iNh5DN5dGr_wiCxcYbA8tOxUWn6MQ'; // Replace with your YouTube Data API key
 
+        // Array of random thank-you messages
+        const thankYouMessages = [
+            "You're a legend! Thanks for Subscribing!",
+            "Rocket League fan? Thanks for joining the squad!",
+            "You rock! Thanks for Subscribing!",
+            "Thanks for Subscribing! You're awesome!",
+            "Welcome to the team! Thanks for Subscribing!"
+        ];
+
         function fetchSubscriberCount() {
             fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${youtubeChannelId}&key=${apiKey}`)
                 .then(response => response.json())
@@ -138,7 +147,11 @@
             // Move car across the screen
             car.style.transform = "translateX(100vw)"; // Moves car across the screen
 
-            // Show the "thank you" message
+            // Show a random "thank you" message
+            message.textContent = thankYouMessages[Math.floor(Math.random() * thankYouMessages.length)];
+            message.style.opacity = 1;
+
+            // Hide the "thank you" message and move car back after animation
             setTimeout(() => {
                 thankYouMessage.style.opacity = 1;
                 message.style.opacity = 0; // Hide the initial message
@@ -146,6 +159,11 @@
 
             // Play the sound effect
             playSoundEffect();
+
+            // Move the car back to the starting position
+            setTimeout(() => {
+                car.style.transform = "translateX(0)";
+            }, 2500); // Move back after 2.5 seconds
         }
 
         // Check for new subscribers and trigger the animation
