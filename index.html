@@ -105,6 +105,25 @@
             font-weight: bold;
             color: #f4a261;
         }
+        /* Chat container */
+        .chat-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 300px;
+            height: 400px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            overflow-y: scroll;
+            padding: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            color: #fff;
+        }
+        .chat-message {
+            font-size: 1rem;
+            margin: 5px 0;
+            color: #f4a261;
+        }
     </style>
 </head>
 <body>
@@ -115,6 +134,11 @@
     <img src="https://i.ibb.co/99nc7xj/Untitled-design-20250119-192011-0000.png" alt="Rocket League Car" class="car" id="car" />
     <div class="ball" id="ball"></div>
     <div class="subscriber-count" id="subscriber-count">Subscribers: 0</div>
+
+    <!-- Chat Container -->
+    <div class="chat-container" id="chat-container">
+        <!-- Chat messages will appear here -->
+    </div>
 
     <script>
         let lastSubscriberCount = 0;
@@ -157,7 +181,7 @@
             }, 3000);
         }
 
-        // Function to check subscriber count
+        // Function to update subscriber count and show the message
         async function checkSubscribers() {
             try {
                 const response = await fetch(API_URL);
@@ -171,12 +195,29 @@
                 // Trigger Rocket League goal if subscriber count increases
                 if (currentSubscriberCount > lastSubscriberCount) {
                     showRocketLeagueGoal();
+                    displayChatMessage(`Subscriber ${currentSubscriberCount}: I just subscribed!`);
                 }
 
                 lastSubscriberCount = currentSubscriberCount; // Update the last subscriber count
             } catch (error) {
                 console.error("Error fetching subscriber count:", error);
             }
+        }
+
+        // Function to add a message to the chat
+        function displayChatMessage(message) {
+            const chatContainer = document.getElementById("chat-container");
+
+            // Create a new message element
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("chat-message");
+            messageElement.textContent = message;
+
+            // Add the message to the chat container
+            chatContainer.appendChild(messageElement);
+
+            // Scroll the chat to the bottom
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
         // Fetch the initial subscriber count
