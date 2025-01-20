@@ -30,18 +30,6 @@
             z-index: -1; /* Make sure the field is behind the car and ball */
         }
 
-        /* Add field lines */
-        .field::before {
-            content: '';
-            position: absolute;
-            top: 5%;
-            left: 5%;
-            width: 90%;
-            height: 90%;
-            border: 2px solid white;
-            border-radius: 5%;
-        }
-
         .center-circle {
             position: absolute;
             top: 50%;
@@ -288,29 +276,31 @@
             const explosions = [document.getElementById("explosion1"), document.getElementById("explosion2"), document.getElementById("explosion3")];
             const message = document.getElementById("message");
 
-            // Random explosion effect
-            const randomExplosion = explosions[Math.floor(Math.random() * explosions.length)];
-            randomExplosion.style.display = "block";
+            // Move the ball towards the goal
+            ball.style.transition = "transform 2s ease-in-out";
+            ball.style.transform = "translateX(50vw)"; // Ball moves towards the goal
 
-            // Move the car to hit the ball
-            car.style.transform = "translateX(90vw)";
-
-            // Move the ball into the air and spin it
             setTimeout(() => {
-                ball.style.transform = "translateY(-40vh) rotate(720deg)"; // Ball goes up and spins
-            }, 100);
+                // Random explosion effect
+                const randomExplosion = explosions[Math.floor(Math.random() * explosions.length)];
+                randomExplosion.style.display = "block";
 
-            // Explosion effect
-            setTimeout(() => {
-                randomExplosion.style.display = "none";
-                message.style.opacity = 1;
-
-                // Trigger car flip and blast effect
-                car.style.transform = "translateX(50vw) rotate(720deg)"; // Car flips in the air
+                // Trigger explosion animation
                 setTimeout(() => {
-                    car.style.transform = "translateX(0)"; // Reset the car
-                    message.style.opacity = 0;
-                }, 1500);
+                    randomExplosion.style.display = "none";
+                    message.style.opacity = 1;
+
+                    // Ball flies back to its starting position
+                    ball.style.transition = "transform 2s ease-in-out";
+                    ball.style.transform = "translateX(-50vw)"; // Ball returns to the starting position
+
+                    // Trigger car flip and blast effect
+                    car.style.transform = "translateX(90vw) rotate(720deg)"; // Car flips in the air
+                    setTimeout(() => {
+                        car.style.transform = "translateX(0)"; // Reset the car
+                        message.style.opacity = 0;
+                    }, 1500);
+                }, 1000);
             }, 2000);
         }
 
@@ -340,44 +330,4 @@
         // Function to get a random subscriber message
         function getRandomSubscriberMessage() {
             const randomIndex = Math.floor(Math.random() * subscriberMessages.length);
-            return subscriberMessages[randomIndex];
-        }
-
-        // Function to add a message to the chat
-        function displayChatMessage(message) {
-            const chatContainer = document.getElementById("chat-container");
-
-            // Create a new message element
-            const messageElement = document.createElement("div");
-            messageElement.classList.add("chat-message");
-            messageElement.textContent = `Subscriber: ${message}`;
-
-            // Add the message to the chat container
-            chatContainer.appendChild(messageElement);
-
-            // Scroll the chat to the bottom
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
-        // Fetch the initial subscriber count
-        async function initializeSubscriberCount() {
-            try {
-                const response = await fetch(API_URL);
-                const data = await response.json();
-                currentSubscriberCount = parseInt(data.items[0].statistics.subscriberCount);
-                lastSubscriberCount = currentSubscriberCount;
-                document.getElementById("subscriber-count").textContent = `Subscribers: ${currentSubscriberCount}`;
-            } catch (error) {
-                console.error("Error initializing subscriber count:", error);
-            }
-        }
-
-        // Initialize and start checking subscribers
-        initializeSubscriberCount();
-        setInterval(checkSubscribers, 10000); // Check subscribers every 10 seconds
-
-        // Test button functionality
-        document.getElementById("testButton").addEventListener("click", showRocketLeagueGoal);
-    </script>
-</body>
-</html>
+            return
