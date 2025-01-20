@@ -95,6 +95,68 @@
             transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
         }
 
+ /* Chat box container */
+        .chat-box {
+            position: absolute;
+            top: 80px; /* Position it below the header */
+            left: 20px;
+            width: 300px;
+            height: 400px;
+            background-color: rgba(0, 0, 0, 0.7); /* Transparent background */
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Chat header */
+        .chat-header {
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #FF6600; /* Rocket League orange */
+        }
+
+        /* Chat messages area */
+        .messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            color: #fff;
+        }
+
+        /* Chat input area */
+        .chat-input {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .chat-input input {
+            width: 80%;
+            padding: 8px;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .chat-input button {
+            width: 18%;
+            background-color: #FF6600; /* Rocket League orange */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .chat-input button:hover {
+            background-color: #FF4500; /* Darker shade for hover */
+        }
+        
         @keyframes explode {
             0% {
                 opacity: 1;
