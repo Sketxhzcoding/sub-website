@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,13 +19,16 @@
         }
 
         .field {
-            position: relative;
-            width: 90%;
-            height: 80%;
-            border: 3px solid white;
+            position: absolute;
+            width: 100%;
+            height: 100%;
             background-color: #4CAF50;
-            background-image: linear-gradient(to bottom, #4CAF50 50%, #388E3C 50%); /* Grass texture */
+            background-image: linear-gradient(to bottom, #4CAF50 50%, #388E3C 50%);
             border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: -1; /* Make sure the field is behind the car and ball */
         }
 
         /* Add field lines */
@@ -59,7 +63,6 @@
             background-color: white;
         }
 
-        /* End zones */
         .goal-zone-left, .goal-zone-right {
             position: absolute;
             top: 0;
