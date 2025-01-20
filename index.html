@@ -30,7 +30,6 @@
             z-index: -1;
         }
 
-        /* Car Image */
         .car {
             position: absolute;
             left: 0; /* Start on the left side */
@@ -62,7 +61,6 @@
             text-align: center;
         }
 
-        /* Header */
         h1 {
             position: absolute;
             top: 20px;
@@ -72,7 +70,26 @@
             font-weight: bold;
             color: #fff;
             text-align: center;
-            white-space: nowrap; /* Prevent line breaks */
+            white-space: nowrap;
+        }
+
+        .firework {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: explode 0.8s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(3) translateY(-30px);
+            }
         }
     </style>
 </head>
@@ -82,14 +99,12 @@
         <img src="https://i.ibb.co/99nc7xj/Untitled-design-20250119-192011-0000.png" alt="Rocket League Car" class="car" id="car" />
         <div class="message" id="message">Thanks for Subscribing!</div>
     </div>
-
     <div class="subscriber-count" id="subscriber-count">Subscribers: Loading...</div>
 
     <script>
         const youtubeChannelId = 'UCOp1oJ0_R3R8HP3KbQpEVIg'; // Replace with your YouTube channel ID
         const apiKey = 'AIzaSyC2U3iNh5DN5dGr_wiCxcYbA8tOxUWn6MQ'; // Replace with your YouTube Data API key
 
-        // Array of random thank-you messages
         const thankYouMessages = [
             "You're a legend! Thanks for Subscribing!",
             "Rocket League fan? Thanks for joining the squad!",
@@ -97,6 +112,8 @@
             "Thanks for Subscribing! You're awesome!",
             "Welcome to the team! Thanks for Subscribing!"
         ];
+
+        let lastSubscriberCount = 0;
 
         function fetchSubscriberCount() {
             fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${youtubeChannelId}&key=${apiKey}`)
@@ -111,41 +128,54 @@
                 });
         }
 
-        // Fetch the initial subscriber count and then update it periodically
         fetchSubscriberCount();
-        setInterval(fetchSubscriberCount, 60000); // Update every 60 seconds
+        setInterval(fetchSubscriberCount, 60000);
 
-        let lastSubscriberCount = 0;
-
-        // Function to play sound effect
         function playSoundEffect() {
             const audio = new Audio('https://www.soundjay.com/button/beep-07.wav'); // Replace with Rocket League sound
             audio.play();
         }
 
-        // Function to animate the Rocket League car and show "thank you"
+        function createFirework(x, y, color) {
+            const firework = document.createElement("div");
+            firework.className = "firework";
+            firework.style.left = `${x}px`;
+            firework.style.top = `${y}px`;
+            firework.style.backgroundColor = color;
+
+            document.body.appendChild(firework);
+
+            setTimeout(() => firework.remove(), 800); // Remove firework after animation
+        }
+
+        function triggerFireworks() {
+            const colors = ["#0057FF", "#FF6600"]; // Rocket League blue and orange
+            for (let i = 0; i < 10; i++) {
+                const x = window.innerWidth / 2 + Math.random() * 200 - 100;
+                const y = window.innerHeight / 2 + Math.random() * 200 - 100;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                setTimeout(() => createFirework(x, y, color), i * 100);
+            }
+        }
+
         function showRocketLeagueSurprise() {
             const car = document.getElementById("car");
             const message = document.getElementById("message");
 
-            // Set a random "thank you" message
             message.textContent = thankYouMessages[Math.floor(Math.random() * thankYouMessages.length)];
             message.style.opacity = 1;
 
-            // Move car across the screen
-            car.style.transform = "translateX(100vw)"; // Moves car across the screen
+            car.style.transform = "translateX(100vw)";
 
-            // Play the sound effect
             playSoundEffect();
+            triggerFireworks();
 
-            // Hide the message and return the car to its starting position
             setTimeout(() => {
-                message.style.opacity = 0; // Hide the message
-                car.style.transform = "translateX(0)"; // Reset car position
-            }, 2500); // Animation duration
+                message.style.opacity = 0;
+                car.style.transform = "translateX(0)";
+            }, 2500);
         }
 
-        // Check for new subscribers and trigger the animation
         function checkSubscribers() {
             fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${youtubeChannelId}&key=${apiKey}`)
                 .then(response => response.json())
@@ -153,14 +183,13 @@
                     const subscriberCount = data.items[0].statistics.subscriberCount;
                     if (subscriberCount > lastSubscriberCount) {
                         lastSubscriberCount = subscriberCount;
-                        showRocketLeagueSurprise(); // Show surprise animation when a new subscriber is detected
+                        showRocketLeagueSurprise();
                     }
                 })
                 .catch(error => console.error('Error checking subscriber count:', error));
         }
 
-        // Start checking for new subscribers
-        setInterval(checkSubscribers, 5000); // Check every 5 seconds
+        setInterval(checkSubscribers, 5000);
     </script>
 </body>
 </html>
