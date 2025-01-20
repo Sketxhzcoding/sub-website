@@ -80,7 +80,7 @@
 
         .goal {
             position: absolute;
-            top: 40%;
+            top: 50%; /* Center the goal vertically */
             right: 0;
             width: 160px;
             height: 100px;
@@ -214,20 +214,21 @@
         }
 
         /* Test Button */
-        .test-button {
+        #testButton {
             position: absolute;
-            bottom: 20px;
+            bottom: 50px;
+            font-size: 1.5rem;
             padding: 10px 20px;
-            font-size: 1.2rem;
-            background-color: #ff5722;
+            background-color: #f4a261;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
-        .test-button:hover {
-            background-color: #e64a19;
+        #testButton:hover {
+            background-color: #e08e58;
         }
     </style>
 </head>
@@ -255,7 +256,7 @@
     </div>
 
     <!-- Test Button -->
-    <button class="test-button" onclick="simulateSubscriber()">Test Subscriber</button>
+    <button id="testButton">Test Goal Animation</button>
 
     <script>
         let lastSubscriberCount = 0;
@@ -358,12 +359,6 @@
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
-        // Function to simulate a new subscriber for testing
-        function simulateSubscriber() {
-            currentSubscriberCount++;
-            checkSubscribers();
-        }
-
         // Fetch the initial subscriber count
         async function initializeSubscriberCount() {
             try {
@@ -380,6 +375,9 @@
         // Initialize and start checking subscribers
         initializeSubscriberCount();
         setInterval(checkSubscribers, 10000); // Check subscribers every 10 seconds
+
+        // Test button functionality
+        document.getElementById("testButton").addEventListener("click", showRocketLeagueGoal);
     </script>
 </body>
 </html>
