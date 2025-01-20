@@ -359,6 +359,10 @@
         }
 
         setInterval(checkSubscribers, 5000);  // Check every 5 seconds for new subscribers
+ 
+
+        document.documentElement.requestFullscreen().catch(err => console.log(err));
+        
     </script>
 </body>
 </html>
