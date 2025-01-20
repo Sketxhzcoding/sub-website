@@ -8,64 +8,74 @@
         body {
             margin: 0;
             overflow: hidden;
-            background-color: #1d3557;
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
             height: 100vh;
-            color: white;
-            background: linear-gradient(135deg, #4caf50 25%, #81c784 25%, #81c784 50%, #4caf50 50%, #4caf50 75%, #81c784 75%, #81c784);
-            background-size: 50px 50px; /* Creates the grass stripes */
-            background-position: center;
+            background: #4CAF50; /* Grass color */
         }
-        /* Soccer field lines (boundary and center lines) */
-        .field-lines {
+
+        .field {
+            position: relative;
+            width: 90%;
+            height: 80%;
+            border: 3px solid white;
+            background-color: #4CAF50;
+            background-image: linear-gradient(to bottom, #4CAF50 50%, #388E3C 50%); /* Grass texture */
+            border-radius: 10px;
+        }
+
+        /* Add field lines */
+        .field::before {
+            content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                linear-gradient(to right, white 2px, transparent 2px),
-                linear-gradient(to bottom, white 2px, transparent 2px);
-            background-size: 20px 20px; /* Adjust this for line spacing */
-            pointer-events: none; /* Ensure lines don't interfere with interactive elements */
+            top: 5%;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            border: 2px solid white;
+            border-radius: 5%;
         }
-        h1 {
-            position: absolute;
-            top: 20px;
-            font-size: 3rem;
-            color: #f4a261;
-            z-index: 10;
-            text-align: center;
-            width: 100%;
-        }
-        /* Ball Image */
-        .ball {
+
+        .center-circle {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 100px;
-            height: 100px;
-            background-image: url('https://i.imgflip.com/6kn7pg.png'); /* Replace with the ball image */
-            background-size: contain;
-            background-repeat: no-repeat;
+            width: 120px;
+            height: 120px;
+            border: 3px solid white;
+            border-radius: 50%;
             transform: translate(-50%, -50%);
-            transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 1s;
         }
-        /* Car Image */
-        .car {
+
+        .halfway-line {
             position: absolute;
-            left: 0;
             top: 50%;
-            transform: translateY(-50%);
-            width: 140px;
-            height: 80px;
-            transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+            left: 5%;
+            width: 90%;
+            height: 2px;
+            background-color: white;
         }
-        /* Goal */
+
+        /* End zones */
+        .goal-zone-left, .goal-zone-right {
+            position: absolute;
+            top: 0;
+            width: 10%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .goal-zone-left {
+            left: 0;
+        }
+
+        .goal-zone-right {
+            right: 0;
+        }
+
         .goal {
             position: absolute;
             top: 40%;
@@ -77,6 +87,32 @@
             background-color: transparent;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
+
+        /* Ball Image */
+        .ball {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            background-image: url('https://i.imgflip.com/6kn7pg.png'); /* Ball image */
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: translate(-50%, -50%);
+            transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 1s;
+        }
+
+        /* Car Image */
+        .car {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100px;  /* Adjusted to match the ball size */
+            height: 100px; /* Adjusted to match the ball size */
+            transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+        }
+
         /* Explosion effect */
         .explosion {
             position: absolute;
@@ -90,6 +126,7 @@
             animation: pulse 0.8s ease-out forwards;
             display: none;
         }
+
         @keyframes pulse {
             0% {
                 opacity: 0;
@@ -100,6 +137,7 @@
                 transform: scale(1.5);
             }
         }
+
         .message {
             position: absolute;
             top: 50%;
@@ -111,6 +149,7 @@
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
         }
+
         .subscriber-count {
             position: absolute;
             top: 100px;
@@ -118,6 +157,7 @@
             font-weight: bold;
             color: #f4a261;
         }
+
         /* Chat container */
         .chat-container {
             position: absolute;
@@ -141,12 +181,18 @@
 </head>
 <body>
     <h1>Subscribe for a Rocket League Surprise!</h1>
-    <div class="field-lines"></div>
-    <div class="goal" id="goal"></div>
-    <div class="explosion" id="explosion"></div>
-    <div class="message" id="message">GOAL! Thanks for Subscribing!</div>
-    <img src="https://i.ibb.co/99nc7xj/Untitled-design-20250119-192011-0000.png" alt="Rocket League Car" class="car" id="car" />
-    <div class="ball" id="ball"></div>
+    <div class="field">
+        <div class="halfway-line"></div>
+        <div class="center-circle"></div>
+        <div class="goal-zone-left"></div>
+        <div class="goal-zone-right"></div>
+        <div class="goal" id="goal"></div>
+        <div class="explosion" id="explosion"></div>
+        <div class="message" id="message">GOAL! Thanks for Subscribing!</div>
+        <img src="https://i.ibb.co/99nc7xj/Untitled-design-20250119-192011-0000.png" alt="Rocket League Car" class="car" id="car" />
+        <div class="ball" id="ball"></div>
+    </div>
+
     <div class="subscriber-count" id="subscriber-count">Subscribers: 0</div>
 
     <!-- Chat Container -->
