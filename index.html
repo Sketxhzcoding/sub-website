@@ -129,7 +129,7 @@
         ];
 
         const soundEffects = [
-            "https://github.com/Sketxhzcoding/sub-website/raw/refs/heads/main/bruh-made-with-Voicemod.mp3"  // Corrected URL  
+            "https://github.com/Sketxhzcoding/sub-website/raw/refs/heads/main/bruh-made-with-Voicemod.mp3"  // Corrected URL
         ];
 
         let lastSubscriberCount = 0;
@@ -207,13 +207,13 @@
                     const subscriberCount = data.items[0].statistics.subscriberCount;
                     if (subscriberCount > lastSubscriberCount) {
                         lastSubscriberCount = subscriberCount;
-                        showRocketLeagueSurprise();
+                        showRocketLeagueSurprise();  // Trigger the surprise only if a new subscriber is detected
                     }
                 })
                 .catch(error => console.error('Error checking subscriber count:', error));
         }
 
-        setInterval(checkSubscribers, 5000);
+        setInterval(checkSubscribers, 5000);  // Check every 5 seconds for new subscribers
     </script>
 </body>
 </html>
