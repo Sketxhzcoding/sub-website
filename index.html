@@ -251,3 +251,11 @@
             } catch (error) {
                 console.error("Error initializing subscriber count:", error);
             }
+        }
+
+        // Initialize and start checking subscribers
+        initializeSubscriberCount();
+        setInterval(checkSubscribers, 10000); // Check subscribers every 10 seconds
+    </script>
+</body>
+</html>
