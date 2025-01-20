@@ -116,6 +116,15 @@
                 transform: translateY(200px) rotate(360deg);
             }
         }
+
+        @keyframes ballSpin {
+            0% {
+                transform: rotate(0deg) translateY(0);
+            }
+            100% {
+                transform: rotate(360deg) translateY(-200px);
+            }
+        }
     </style>
 </head>
 <body>
@@ -204,15 +213,17 @@
 
             ball.style.transition = "transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67)";
             ball.style.transform = "translateX(calc(100vw - 150px))";  // Ball moves with the car
+            ball.style.animation = "ballSpin 2s ease-out forwards";  // Add spin animation
 
             playRandomSoundEffect();
             triggerFireworks();
 
             setTimeout(() => {
                 car.style.transition = "none";
-                car.style.transform = "translateX(20px)";
+                car.style.transform = "translateX(calc(50% - 150px))"; // Reset car to match ball's position
                 ball.style.transition = "none";
                 ball.style.transform = "translate(-50%, -50%)"; // Reset ball to center
+                ball.style.animation = "none";  // Stop ball animation
                 message.style.opacity = 0;
             }, 3000);
         }
