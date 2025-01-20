@@ -234,7 +234,16 @@
 
     <!-- Chat Container -->
     <div class="chat-container" id="chat-container">
-        <!-- Chat messages will appear here -->
+        <div class="chat-message" id="chat-message-1">RocketFan123: Hey, did you see that goal?</div>
+        <div class="chat-message" id="chat-message-2">TurboSlayer: Yeah! That was insane!</div>
+        <div class="chat-message" id="chat-message-3">RocketFan123: Someone just subscribed!</div>
+        <div class="chat-message" id="chat-message-4">TurboSlayer: No way! Who was it?</div>
+        <div class="chat-message" id="chat-message-5">RocketFan123: It was another Rocket League fan!</div>
+        <div class="chat-message" id="chat-message-6">TurboSlayer: That's awesome! More people joining the squad!</div>
+        <div class="chat-message" id="chat-message-7">RocketFan123: Yeah, we're growing fast!</div>
+        <div class="chat-message" id="chat-message-8">TurboSlayer: Keep it up, we're gonna be huge!</div>
+        <div class="chat-message" id="chat-message-9">RocketFan123: One more subscriber and we'll hit a milestone!</div>
+        <div class="chat-message" id="chat-message-10">TurboSlayer: Let's go! Keep those subs coming!</div>
     </div>
 
     <script>
@@ -254,9 +263,9 @@
             "I love your content, just subscribed!",
             "Rocket League fan here, just subscribed!"
         ];
-        
+
         const randomUsernames = [
-            "RocketFan123", "GoalMaster42", "SubForRL", "BoostedPlayerX", "CarTamer100", "RLChampion", "SoccerStar21", "Ballista57", "TurboSlayer", "EpicGamer43"
+            "RocketFan123", "TurboSlayer", "BoostedPlayerX", "CarTamer100", "RLChampion", "SoccerStar21", "Ballista57", "EpicGamer43"
         ];
 
         // Function to create Rocket League goal animation
@@ -292,32 +301,13 @@
             }, 2000);
         }
 
-        // Function to display random subscriber message in chat
-        function displayChatMessage() {
-            const chatContainer = document.getElementById("chat-container");
-
-            // Get random username and message
-            const randomUsername = randomUsernames[Math.floor(Math.random() * randomUsernames.length)];
-            const randomMessage = subscriberMessages[Math.floor(Math.random() * subscriberMessages.length)];
-
-            // Create a new chat message element
-            const chatMessageElement = document.createElement("div");
-            chatMessageElement.classList.add("chat-message");
-            chatMessageElement.textContent = `${randomUsername}: ${randomMessage}`;
-
-            // Append to chat container
-            chatContainer.appendChild(chatMessageElement);
-
-            // Scroll to bottom
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
         // Function to update subscriber count and show the message
         function checkSubscribers() {
             // Simulate subscriber count increase and display the goal animation
             if (currentSubscriberCount > lastSubscriberCount) {
                 showRocketLeagueGoal();
-                displayChatMessage();
+                const chatMessage3 = document.getElementById("chat-message-3");
+                chatMessage3.textContent = `RocketFan123: Hey, someone subscribed!`;
             }
 
             // Update subscriber count on the page
