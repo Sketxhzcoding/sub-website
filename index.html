@@ -122,7 +122,7 @@
             transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
         }
 
-        /* Explosion effect */
+        /* Explosion effects */
         .explosion {
             position: absolute;
             top: 50%;
@@ -134,6 +134,18 @@
             border-radius: 50%;
             animation: pulse 0.8s ease-out forwards;
             display: none;
+        }
+
+        .explosion1 {
+            background: radial-gradient(circle, #ff5722, #e91e63, #ff9800);
+        }
+
+        .explosion2 {
+            background: radial-gradient(circle, #4caf50, #81c784, #66bb6a);
+        }
+
+        .explosion3 {
+            background: radial-gradient(circle, #9c27b0, #e040fb, #d500f9);
         }
 
         @keyframes pulse {
@@ -210,7 +222,9 @@
         <div class="goal-zone-left"></div>
         <div class="goal-zone-right"></div>
         <div class="goal" id="goal">GOAL!</div>
-        <div class="explosion" id="explosion"></div>
+        <div class="explosion explosion1" id="explosion1"></div>
+        <div class="explosion explosion2" id="explosion2"></div>
+        <div class="explosion explosion3" id="explosion3"></div>
         <div class="message" id="message">GOAL! Thanks for Subscribing!</div>
         <img src="https://i.ibb.co/99nc7xj/Untitled-design-20250119-192011-0000.png" alt="Rocket League Car" class="car" id="car" />
         <div class="ball" id="ball"></div>
@@ -250,8 +264,12 @@
         function showRocketLeagueGoal() {
             const car = document.getElementById("car");
             const ball = document.getElementById("ball");
-            const explosion = document.getElementById("explosion");
+            const explosions = [document.getElementById("explosion1"), document.getElementById("explosion2"), document.getElementById("explosion3")];
             const message = document.getElementById("message");
+
+            // Random explosion effect
+            const randomExplosion = explosions[Math.floor(Math.random() * explosions.length)];
+            randomExplosion.style.display = "block";
 
             // Move the car to hit the ball
             car.style.transform = "translateX(90vw)";
@@ -263,19 +281,16 @@
 
             // Explosion effect
             setTimeout(() => {
-                explosion.style.display = "block";
+                randomExplosion.style.display = "none";
                 message.style.opacity = 1;
 
+                // Trigger car flip and blast effect
+                car.style.transform = "translateX(50vw) rotate(720deg)"; // Car flips in the air
                 setTimeout(() => {
-                    explosion.style.display = "none";
+                    car.style.transform = "translateX(0)"; // Reset the car
                     message.style.opacity = 0;
                 }, 1500);
             }, 2000);
-
-            // Reset car position after animation
-            setTimeout(() => {
-                car.style.transform = "translateX(0)";
-            }, 3000);
         }
 
         // Function to update subscriber count and show the message
