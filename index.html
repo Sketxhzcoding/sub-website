@@ -32,7 +32,7 @@
 
         .car {
             position: absolute;
-            left: 0; /* Start on the left side */
+            left: 20px; /* Start fixed at the left of the screen */
             top: 50%;
             transform: translateY(-50%);
             width: 300px;
@@ -73,12 +73,16 @@
             white-space: nowrap;
         }
 
-        .firework {
+        .firework, .confetti {
             position: absolute;
-            width: 10px;
-            height: 10px;
             border-radius: 50%;
             animation: explode 0.8s ease-out forwards;
+        }
+
+        .confetti {
+            width: 10px;
+            height: 30px;
+            animation: fall 1.5s ease-out forwards;
         }
 
         @keyframes explode {
@@ -89,6 +93,17 @@
             100% {
                 opacity: 0;
                 transform: scale(3) translateY(-30px);
+            }
+        }
+
+        @keyframes fall {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(200px) rotate(360deg);
             }
         }
     </style>
@@ -141,11 +156,13 @@
             firework.className = "firework";
             firework.style.left = `${x}px`;
             firework.style.top = `${y}px`;
+            firework.style.width = `10px`;
+            firework.style.height = `10px`;
             firework.style.backgroundColor = color;
 
             document.body.appendChild(firework);
 
-            setTimeout(() => firework.remove(), 800); // Remove firework after animation
+            setTimeout(() => firework.remove(), 800);
         }
 
         function triggerFireworks() {
@@ -158,6 +175,23 @@
             }
         }
 
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement("div");
+                confetti.className = "confetti";
+                confetti.style.left = `${Math.random() * window.innerWidth}px`;
+                confetti.style.top = `0`;
+                confetti.style.width = `10px`;
+                confetti.style.height = `30px`;
+                confetti.style.backgroundColor = Math.random() > 0.5 ? "#0057FF" : "#FF6600";
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+                document.body.appendChild(confetti);
+
+                setTimeout(() => confetti.remove(), 1500);
+            }
+        }
+
         function showRocketLeagueSurprise() {
             const car = document.getElementById("car");
             const message = document.getElementById("message");
@@ -165,15 +199,18 @@
             message.textContent = thankYouMessages[Math.floor(Math.random() * thankYouMessages.length)];
             message.style.opacity = 1;
 
-            car.style.transform = "translateX(100vw)";
+            car.style.transition = "transform 2s linear";
+            car.style.transform = "translateX(calc(100vw - 320px))";
 
             playSoundEffect();
             triggerFireworks();
+            createConfetti();
 
             setTimeout(() => {
+                car.style.transition = "none";
+                car.style.transform = "translateX(20px)";
                 message.style.opacity = 0;
-                car.style.transform = "translateX(0)";
-            }, 2500);
+            }, 3000);
         }
 
         function checkSubscribers() {
