@@ -27,7 +27,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: -1; /* Make sure the field is behind the car and ball */
+            z-index: -1;
         }
 
         /* Add field lines */
@@ -117,8 +117,8 @@
             left: 0;
             top: 50%;
             transform: translateY(-50%);
-            width: 300px;  /* Car width increased to 300px */
-            height: auto; /* Height adjusted proportionally */
+            width: 300px;
+            height: auto;
             transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
         }
 
@@ -173,7 +173,7 @@
 
         .subscriber-count {
             position: absolute;
-            top: 200px;  /* Adjusted for better alignment */
+            top: 200px;
             font-size: 2rem;
             font-weight: bold;
             color: #f4a261;
@@ -183,7 +183,7 @@
         /* Chat container */
         .chat-container {
             position: absolute;
-            top: 160px;  /* Moved down to prevent overlap with header */
+            top: 160px;
             left: 20px;
             width: 300px;
             height: 400px;
@@ -241,7 +241,7 @@
         let lastSubscriberCount = 0;
         let currentSubscriberCount = 0;
 
-        // Random subscriber messages
+        // Random subscriber messages and usernames
         const subscriberMessages = [
             "I've just subscribed!",
             "Join the team, just subscribed!",
@@ -253,6 +253,10 @@
             "Another sub added to the list!",
             "I love your content, just subscribed!",
             "Rocket League fan here, just subscribed!"
+        ];
+        
+        const randomUsernames = [
+            "RocketFan123", "GoalMaster42", "SubForRL", "BoostedPlayerX", "CarTamer100", "RLChampion", "SoccerStar21", "Ballista57", "TurboSlayer", "EpicGamer43"
         ];
 
         // YouTube API Setup
@@ -276,7 +280,7 @@
 
             // Move the ball into the air and spin it
             setTimeout(() => {
-                ball.style.transform = "translateY(-40vh) rotate(720deg)";  // Ball goes up and spins
+                ball.style.transform = "translateY(-40vh) rotate(720deg)";
             }, 100);
 
             // Explosion effect
@@ -285,9 +289,9 @@
                 message.style.opacity = 1;
 
                 // Trigger car flip and blast effect
-                car.style.transform = "translateX(50vw) rotate(720deg)"; // Car flips in the air
+                car.style.transform = "translateX(50vw) rotate(720deg)";
                 setTimeout(() => {
-                    car.style.transform = "translateX(0)"; // Reset the car
+                    car.style.transform = "translateX(0)";
                     message.style.opacity = 0;
                 }, 1500);
             }, 2000);
@@ -307,7 +311,7 @@
                 // Trigger Rocket League goal if subscriber count increases
                 if (currentSubscriberCount > lastSubscriberCount) {
                     showRocketLeagueGoal();
-                    displayChatMessage(getRandomSubscriberMessage());
+                    displayChatMessage(getRandomSubscriberMessage(), getRandomUsername());
                 }
 
                 lastSubscriberCount = currentSubscriberCount; // Update the last subscriber count
@@ -322,38 +326,17 @@
             return subscriberMessages[randomIndex];
         }
 
+        // Function to get a random username
+        function getRandomUsername() {
+            const randomIndex = Math.floor(Math.random() * randomUsernames.length);
+            return randomUsernames[randomIndex];
+        }
+
         // Function to add a message to the chat
-        function displayChatMessage(message) {
+        function displayChatMessage(message, username) {
             const chatContainer = document.getElementById("chat-container");
 
             // Create a new message element
             const messageElement = document.createElement("div");
             messageElement.classList.add("chat-message");
-            messageElement.textContent = `Subscriber: ${message}`;
-
-            // Add the message to the chat container
-            chatContainer.appendChild(messageElement);
-
-            // Scroll the chat to the bottom
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
-        // Fetch the initial subscriber count
-        async function initializeSubscriberCount() {
-            try {
-                const response = await fetch(API_URL);
-                const data = await response.json();
-                currentSubscriberCount = parseInt(data.items[0].statistics.subscriberCount);
-                lastSubscriberCount = currentSubscriberCount;
-                document.getElementById("subscriber-count").textContent = `Subscribers: ${currentSubscriberCount}`;
-            } catch (error) {
-                console.error("Error initializing subscriber count:", error);
-            }
-        }
-
-        // Initialize and start checking subscribers
-        initializeSubscriberCount();
-        setInterval(checkSubscribers, 10000); // Check subscribers every 10 seconds
-    </script>
-</body>
-</html>
+            messageElement.textContent = `${username}: ${
