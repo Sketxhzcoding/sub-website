@@ -14,7 +14,7 @@
             align-items: center;
             position: relative;
             height: 100vh;
-            background: #4CAF50;
+            background: #4CAF50; /* Grass color */
         }
 
         .field {
@@ -30,70 +30,15 @@
             z-index: -1;
         }
 
-        .goal {
-            position: absolute;
-            top: 40%;
-            right: 0;
-            width: 160px;
-            height: 100px;
-            border: 5px solid #f4a261;
-            border-radius: 20px;
-            background-color: #f4a261;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            z-index: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-        }
-
-        .ball {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100px;
-            height: 100px;
-            background-image: url('https://i.imgflip.com/6kn7pg.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            transform: translate(-50%, -50%);
-            transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 1s;
-        }
-
+        /* Car Image */
         .car {
             position: absolute;
-            left: 0;
+            left: -300px; /* Start off-screen */
             top: 50%;
             transform: translateY(-50%);
             width: 300px;
             height: auto;
             transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-        }
-
-        .explosion {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, orange, red, yellow, transparent);
-            border-radius: 50%;
-            animation: pulse 0.8s ease-out forwards;
-            display: none;
-        }
-
-        @keyframes pulse {
-            0% {
-                opacity: 0;
-                transform: scale(0.5);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1.5);
-            }
         }
 
         .message {
@@ -110,33 +55,27 @@
 
         .subscriber-count {
             position: absolute;
-            top: 20px;
+            top: 200px;
             font-size: 2rem;
             font-weight: bold;
             color: #f4a261;
             text-align: center;
         }
 
-        .chat-container {
+        /* "Thank You" Text */
+        .thank-you {
             position: absolute;
-            top: 160px;
-            left: 20px;
-            width: 300px;
-            height: 400px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            overflow-y: scroll;
-            padding: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            color: #fff;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
         }
 
-        .chat-message {
-            font-size: 1rem;
-            margin: 5px 0;
-            color: #f4a261;
-        }
-
+        /* Header */
         h1 {
             position: absolute;
             top: 20px;
@@ -146,148 +85,85 @@
             font-weight: bold;
             color: #fff;
             text-align: center;
-            white-space: nowrap;
+            white-space: nowrap; /* Prevent line breaks */
         }
     </style>
 </head>
 <body>
     <h1>Subscribe for a Rocket League Surprise!</h1>
     <div class="field">
-        <div class="goal" id="goal">GOAL!</div>
-        <div class="explosion" id="explosion"></div>
-        <div class="message" id="message">Thanks for Subscribing!</div>
         <img src="https://i.ibb.co/99nc7xj/Untitled-design-20250119-192011-0000.png" alt="Rocket League Car" class="car" id="car" />
-        <div class="ball" id="ball"></div>
+        <div class="message" id="message">Thanks for Subscribing!</div>
+        <div class="thank-you" id="thank-you">THANK YOU FOR SUBSCRIBING!</div>
     </div>
 
-    <div class="subscriber-count" id="subscriber-count">Subscribers: 0</div>
-    <div class="chat-container" id="chat-container"></div>
+    <div class="subscriber-count" id="subscriber-count">Subscribers: Loading...</div>
 
     <script>
+        const youtubeChannelId = 'UCOp1oJ0_R3R8HP3KbQpEVIg'; // Replace with your YouTube channel ID
+        const apiKey = 'AIzaSyC2U3iNh5DN5dGr_wiCxcYbA8tOxUWn6MQ'; // Replace with your YouTube Data API key
+
+        function fetchSubscriberCount() {
+            fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${youtubeChannelId}&key=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    const subscriberCount = data.items[0].statistics.subscriberCount;
+                    document.getElementById("subscriber-count").textContent = `Subscribers: ${subscriberCount}`;
+                })
+                .catch(error => {
+                    console.error('Error fetching YouTube data:', error);
+                    document.getElementById("subscriber-count").textContent = 'Error loading subscriber count';
+                });
+        }
+
+        // Fetch the initial subscriber count and then update it periodically
+        fetchSubscriberCount();
+        setInterval(fetchSubscriberCount, 60000); // Update every 60 seconds
+
         let lastSubscriberCount = 0;
         let currentSubscriberCount = 0;
 
-        // Random subscriber messages
-        const subscriberMessages = [
-            "I've just subscribed!",
-            "Join the team, just subscribed!",
-            "Subscribed! Let's go!",
-            "You got a new sub, congrats!",
-            "I hit that subscribe button!",
-            "Boom! Another subscriber!",
-            "I just joined the squad!",
-            "Another sub added to the list!",
-            "I love your content, just subscribed!",
-            "Rocket League fan here, just subscribed!"
-        ];
-
-        // YouTube API Setup
-        const API_KEY = "AIzaSyC2U3iNh5DN5dGr_wiCxcYbA8tOxUWn6MQ";
-        const CHANNEL_ID = "UCOp1oJ0_R3R8HP3KbQpEVIg";
-        const API_URL = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`;
-
-        // Function to create Rocket League explosion
-        function showExplosion() {
-            const explosion = document.getElementById("explosion");
-            explosion.style.display = "block";
-            setTimeout(() => {
-                explosion.style.display = "none";
-            }, 1000);
+        // Function to play sound effect
+        function playSoundEffect() {
+            const audio = new Audio('https://www.soundjay.com/button/beep-07.wav'); // Replace with Rocket League sound
+            audio.play();
         }
 
-        // Function to animate car emote (flip or dance)
-        function carEmote() {
+        // Function to animate the Rocket League car and show "thank you"
+        function showRocketLeagueSurprise() {
             const car = document.getElementById("car");
-            car.style.transform = "translateX(80vw) rotate(720deg)"; // Car flips
-
-            // After emote is done, start replay
-            setTimeout(() => {
-                showReplay();
-            }, 2000);
-        }
-
-        // Function for replay effect
-        function showReplay() {
-            const car = document.getElementById("car");
+            const thankYouMessage = document.getElementById("thank-you");
             const message = document.getElementById("message");
 
-            // Zoom in on the car
-            car.style.transform = "translateX(50vw) scale(1.5)";
+            // Move car across the screen
+            car.style.transform = "translateX(100vw)"; // Moves car across the screen
 
-            // Show the message after replay
+            // Show the "thank you" message
             setTimeout(() => {
-                message.style.opacity = 1;
-            }, 500);
+                thankYouMessage.style.opacity = 1;
+                message.style.opacity = 0; // Hide the initial message
+            }, 1500);
 
-            // Return car back to its original position
-            setTimeout(() => {
-                car.style.transform = "translateX(0) scale(1)";
-                message.style.opacity = 0;
-            }, 2500);
+            // Play the sound effect
+            playSoundEffect();
         }
 
-        // Function to update subscriber count and show the message
-        async function checkSubscribers() {
-            try {
-                const response = await fetch(API_URL);
-                const data = await response.json();
-                currentSubscriberCount = parseInt(data.items[0].statistics.subscriberCount);
-
-                // Update the displayed subscriber count
-                const subscriberCountElement = document.getElementById("subscriber-count");
-                subscriberCountElement.textContent = `Subscribers: ${currentSubscriberCount}`;
-
-                // Trigger Rocket League explosion and emote if subscriber count increases
-                if (currentSubscriberCount > lastSubscriberCount) {
-                    showExplosion();
-                    carEmote();
-                    displayChatMessage(getRandomSubscriberMessage());
-                }
-
-                lastSubscriberCount = currentSubscriberCount; // Update the last subscriber count
-            } catch (error) {
-                console.error("Error fetching subscriber count:", error);
-            }
+        // Check for new subscribers and trigger the animation
+        function checkSubscribers() {
+            fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${youtubeChannelId}&key=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    const subscriberCount = data.items[0].statistics.subscriberCount;
+                    if (subscriberCount > lastSubscriberCount) {
+                        lastSubscriberCount = subscriberCount;
+                        showRocketLeagueSurprise(); // Show surprise animation when a new subscriber is detected
+                    }
+                })
+                .catch(error => console.error('Error checking subscriber count:', error));
         }
 
-        // Function to get a random subscriber message
-        function getRandomSubscriberMessage() {
-            const randomIndex = Math.floor(Math.random() * subscriberMessages.length);
-            return subscriberMessages[randomIndex];
-        }
-
-        // Function to add a message to the chat
-        function displayChatMessage(message) {
-            const chatContainer = document.getElementById("chat-container");
-
-            // Create a new message element
-            const messageElement = document.createElement("div");
-            messageElement.classList.add("chat-message");
-            messageElement.textContent = `Subscriber: ${message}`;
-
-            // Add the message to the chat container
-            chatContainer.appendChild(messageElement);
-
-            // Scroll the chat to the bottom
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
-        // Fetch the initial subscriber count
-        async function initializeSubscriberCount() {
-            try {
-                const response = await fetch(API_URL);
-                const data = await response.json();
-                currentSubscriberCount = parseInt(data.items[0].statistics.subscriberCount);
-                lastSubscriberCount = currentSubscriberCount;
-                document.getElementById("subscriber-count").textContent = `Subscribers: ${currentSubscriberCount}`;
-            } catch (error) {
-                console.error("Error initializing subscriber count:", error);
-            }
-        }
-
-        // Initialize and start checking subscribers
-        initializeSubscriberCount();
-        setInterval(checkSubscribers, 10000); // Check subscribers every 10 seconds
+        // Start checking for new subscribers
+        setInterval(checkSubscribers, 5000); // Check every 5 seconds
     </script>
 </body>
 </html>
