@@ -8,385 +8,134 @@
         body {
             margin: 0;
             overflow: hidden;
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
+            flex-direction: column;
             height: 100vh;
-            background: #4CAF50; /* Grass color */
+            background: linear-gradient(135deg, #0057FF, #FF6600); /* Rocket League Colors */
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+            animation: glow 2s infinite alternate;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+            }
+            to {
+                text-shadow: 0 0 30px rgba(255, 255, 255, 1);
+            }
         }
 
         .field {
-            position: absolute;
-            width: 100%;
-            height: 100%;
+            position: relative;
+            width: 80%;
+            max-width: 1000px;
+            height: 500px;
             background-color: #4CAF50;
             background-image: linear-gradient(to bottom, #4CAF50 50%, #388E3C 50%);
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: -1;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
         }
 
         .car {
             position: absolute;
-            left: 20px; /* Start fixed at the left of the screen */
+            left: 20px;
             top: 50%;
             transform: translateY(-50%);
-            width: 300px;
-            height: auto;
-            transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+            width: 200px;
+            animation: carMove 5s infinite linear;
         }
 
-        .message {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2rem;
-            font-weight: bold;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        .subscriber-count {
-            position: absolute;
-            top: 200px;
-            font-size: 2rem;
-            font-weight: bold;
-            color: #f4a261;
-            text-align: center;
-        }
-
-        h1 {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #fff;
-            text-align: center;
-            white-space: nowrap;
-        }
-
-        .firework, .confetti {
-            position: absolute;
-            border-radius: 50%;
-            animation: explode 0.8s ease-out forwards;
-        }
-
-        .confetti {
-            width: 10px;
-            height: 30px;
-            animation: fall 1.5s ease-out forwards;
+        @keyframes carMove {
+            from {
+                transform: translateX(-20px);
+            }
+            to {
+                transform: translateX(1000px);
+            }
         }
 
         .ball {
             position: absolute;
             top: 50%;
-            left: 50%;
+            left: 70%;
             transform: translate(-50%, -50%);
             width: 80px;
-            height: auto;
-            transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+            animation: ballBounce 2s infinite ease-in-out;
         }
 
- /* Chat box container */
-        .chat-box {
-            position: absolute;
-            top: 80px; /* Position it below the header */
-            left: 20px;
-            width: 300px;
-            height: 400px;
-            background-color: rgba(0, 0, 0, 0.7); /* Transparent background */
-            border-radius: 10px;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        @keyframes ballBounce {
+            0%, 100% {
+                transform: translate(-50%, -50%);
+            }
+            50% {
+                transform: translate(-50%, -200px);
+            }
         }
 
-        /* Chat header */
-        .chat-header {
-            font-weight: bold;
+        .subscriber-count {
             font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: #FF6600; /* Rocket League orange */
+            margin-top: 10px;
+            text-align: center;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
         }
 
-        /* Chat messages area */
-        .messages {
-            flex-grow: 1;
-            overflow-y: auto;
-            margin-bottom: 10px;
-            font-size: 1rem;
-            color: #fff;
+        .btn-container {
+            margin-top: 20px;
         }
 
-        /* Chat input area */
-        .chat-input {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .chat-input input {
-            width: 80%;
-            padding: 8px;
-            border: 2px solid #fff;
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
-
-        .chat-input button {
-            width: 18%;
-            background-color: #FF6600; /* Rocket League orange */
-            color: #fff;
+        button {
+            padding: 10px 20px;
             border: none;
+            background-color: #FF6600;
+            color: #fff;
+            font-size: 1.2rem;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        .chat-input button:hover {
-            background-color: #FF4500; /* Darker shade for hover */
-        }
-        
-        @keyframes explode {
-            0% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(3) translateY(-30px);
-            }
-        }
-
-        @keyframes fall {
-            0% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(200px) rotate(360deg);
-            }
-        }
-
-        @keyframes ballSpin {
-            0% {
-                transform: rotate(0deg) translateY(0);
-            }
-            100% {
-                transform: rotate(360deg) translateY(-200px);
-            }
+        button:hover {
+            background-color: #FF4500;
         }
     </style>
 </head>
 <body>
     <h1>Subscribe for a Rocket League Surprise!</h1>
     <div class="field">
-        <img src="https://i.ibb.co/99nc7xj/Untitled-design-20250119-192011-0000.png" alt="Rocket League Car" class="car" id="car" />
-        <img src="https://i.imgflip.com/6kn7pg.png" alt="Rocket League Ball" class="ball" id="ball" />
-        <div class="message" id="message">Thanks for Subscribing!</div>
+        <img src="https://i.ibb.co/99nc7xj/Untitled-design-20250119-192011-0000.png" alt="Rocket League Car" class="car" />
+        <img src="https://i.imgflip.com/6kn7pg.png" alt="Rocket League Ball" class="ball" />
     </div>
     <div class="subscriber-count" id="subscriber-count">Subscribers: Loading...</div>
-
-    <!-- Invisible YouTube video iframe for background music -->
-    <iframe 
-        width="0" 
-        height="0" 
-        src="https://www.youtube.com/embed/H5uG-XUiXqk?autoplay=1&loop=1&playlist=H5uG-XUiXqk" 
-        frameborder="0" 
-        allow="autoplay; encrypted-media" 
-        allowfullscreen 
-        style="display:none;">
-    </iframe>
-
-  <div class="chat-box">
-        <div class="chat-header"></div>
-        <div class="messages">
-            <!-- Empty chat area for now -->
-        </div>
-        <div class="chat-input">
-            <input type="text" placeholder="Type your message..." disabled />
-            <button disabled>Send</button>
-        </div>
-  </div>
-    
-    <script>
-        const youtubeChannelId = 'UCOp1oJ0_R3R8HP3KbQpEVIg'; // Replace with your YouTube channel ID
-        const apiKey = 'AIzaSyC2U3iNh5DN5dGr_wiCxcYbA8tOxUWn6MQ'; // Replace with your YouTube Data API key
-
-        const thankYouMessages = [
-            "You're a legend! Thanks for Subscribing!",
-            "Rocket League fan? Thanks for joining the squad!",
-            "You rock! Thanks for Subscribing!",
-            "Thanks for Subscribing! You're awesome!",
-            "Welcome to the team! Thanks for Subscribing!"
-        ];
-
-        const soundEffects = [
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/funny!-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/funny-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/funny,-but-not-funny-haha,-funny-hehehehehe-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/your-banned-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/mario-jump-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/oh-my-god-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/erm-what-the-sigma-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/oh-my-pc-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/bomboclat---kaicenat-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/discord-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/alarm!!!-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/clapping-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/bomboclat-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/gojo-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/why-are-you-gay_-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/roblox-hi-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/roblox-bye-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/womp-womp-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/meme-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/asian-jeff-full-boxed-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/minecraft-eating-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/huh!-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/the-prowler-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/shrimp-alfredo-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/bad-to-the-bone-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/laugh-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/yippee-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/gay-made-with-Voicemod.mp3",
-    "https://github.com/sketxhzcoding/sub-website/raw/refs/heads/main/holy-moly-made-with-Voicemod.mp3"
-];
-
-        let lastSubscriberCount = 0;
-
-        function fetchSubscriberCount() {
-            fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${youtubeChannelId}&key=${apiKey}`)
-                .then(response => response.json())
-                .then(data => {
-                    const subscriberCount = data.items[0].statistics.subscriberCount;
-                    // Update the subscriber count if it has changed
-                    if (subscriberCount !== lastSubscriberCount) {
-                        lastSubscriberCount = subscriberCount;
-                        document.getElementById("subscriber-count").textContent = `Subscribers: ${subscriberCount}`;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching YouTube data:', error);
-                    document.getElementById("subscriber-count").textContent = 'Error loading subscriber count';
-                });
-        }
-
-        fetchSubscriberCount();
-        setInterval(fetchSubscriberCount, 60000);
-
-        function playRandomSoundEffect() {
-            const randomSound = soundEffects[Math.floor(Math.random() * soundEffects.length)];
-            const audio = new Audio(randomSound);
-            audio.play();
-        }
-
-        function createFirework(x, y, color) {
-            const firework = document.createElement("div");
-            firework.className = "firework";
-            firework.style.left = `${x}px`;
-            firework.style.top = `${y}px`;
-            firework.style.width = `10px`;
-            firework.style.height = `10px`;
-            firework.style.backgroundColor = color;
-
-            document.body.appendChild(firework);
-
-            setTimeout(() => firework.remove(), 800);
-        }
-
-        function triggerFireworks() {
-            const colors = ["#0057FF", "#FF6600"]; // Rocket League blue and orange
-            for (let i = 0; i < 10; i++) {
-                const x = window.innerWidth / 2 + Math.random() * 200 - 100;
-                const y = window.innerHeight / 2 + Math.random() * 200 - 100;
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                setTimeout(() => createFirework(x, y, color), i * 100);
-            }
-        }
-
-        function showRocketLeagueSurprise() {
-            const car = document.getElementById("car");
-            const ball = document.getElementById("ball");
-            const message = document.getElementById("message");
-
-            message.textContent = thankYouMessages[Math.floor(Math.random() * thankYouMessages.length)];
-            message.style.opacity = 1;
-
-            car.style.transition = "transform 2s linear";
-            car.style.transform = "translateX(calc(100vw - 320px))";
-
-            ball.style.transition = "transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67)";
-            ball.style.transform = "translateX(calc(100vw - 150px))";  // Ball moves with the car
-            ball.style.animation = "ballSpin 2s ease-out forwards";  // Add spin animation
-
-            playRandomSoundEffect();
-            triggerFireworks();
-
-            setTimeout(() => {
-                car.style.transition = "none";
-                car.style.transform = "translateX(calc(50% - 150px))"; // Reset car to match ball's position
-                ball.style.transition = "none";
-                ball.style.transform = "translate(-50%, -50%)"; // Reset ball to center
-                ball.style.animation = "none";  // Stop ball animation
-                message.style.opacity = 0;
-            }, 3000);
-        }
-
-        function checkSubscribers() {
-            fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${youtubeChannelId}&key=${apiKey}`)
-                .then(response => response.json())
-                .then(data => {
-                    const subscriberCount = data.items[0].statistics.subscriberCount;
-                    if (subscriberCount > lastSubscriberCount) {
-                        lastSubscriberCount = subscriberCount;
-                        document.getElementById("subscriber-count").textContent = `Subscribers: ${subscriberCount}`;
-                        showRocketLeagueSurprise();  // Trigger the surprise only if a new subscriber is detected
-                    }
-                })
-                .catch(error => console.error('Error checking subscriber count:', error));
-        }
-
-        setInterval(checkSubscribers, 5000);  // Check every 5 seconds for new subscribers
- 
-
-        document.documentElement.requestFullscreen().catch(err => console.log(err));
-        
-    </script>
-
+    <div class="btn-container">
+        <button id="surprise-btn">Trigger Surprise!</button>
+    </div>
 
     <script>
-    // Function to enter full-screen mode
-function enterFullScreen() {
-    if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
-    } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-        document.documentElement.mozRequestFullScreen();
-    } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari, Opera
-        document.documentElement.webkitRequestFullscreen();
-    } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-        document.documentElement.msRequestFullscreen();
-    }
-}
+        const subscriberCount = document.getElementById("subscriber-count");
+        const surpriseBtn = document.getElementById("surprise-btn");
 
-// Ensure the fullscreen mode request is tied to a user action
-document.querySelector('.chat-input button').addEventListener('click', function() {
-    // Ensure the event is triggered after the page is ready for fullscreen
-    setTimeout(() => {
-        enterFullScreen();
-    }, 100);
-});
+        surpriseBtn.addEventListener("click", () => {
+            alert("Surprise triggered! Thanks for Subscribing!");
+            // You can trigger animations or sound effects here.
+        });
+
+        // Dummy subscriber count update
+        setInterval(() => {
+            const randomCount = Math.floor(Math.random() * 10000) + 1000;
+            subscriberCount.textContent = `Subscribers: ${randomCount}`;
+        }, 3000);
     </script>
 </body>
 </html>
