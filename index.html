@@ -6,225 +6,187 @@
     <title>Subscribe for a Rocket League Surprise!</title>
     <style>
         body {
-    margin: 0;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    height: 100vh;
-    background: #4CAF50; /* Grass color */
-    flex-direction: column; /* Stacks items vertically on smaller screens */
-}
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            height: 100vh;
+            background: #4CAF50; /* Grass color */
+        }
 
-.field {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: #4CAF50;
-    background-image: linear-gradient(to bottom, #4CAF50 50%, #388E3C 50%);
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: -1;
-    flex-direction: column; /* Adjust layout for smaller screens */
-}
+        .field {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #4CAF50;
+            background-image: linear-gradient(to bottom, #4CAF50 50%, #388E3C 50%);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: -1;
+        }
 
-.car {
-    position: absolute;
-    left: 10%; /* Reduced margins for smaller screens */
-    top: 50%;
-    transform: translateY(-50%);
-    width: 150px; /* Reduced size for smaller screens */
-    height: auto;
-    transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-}
+        .car {
+            position: absolute;
+            left: 20px; /* Start fixed at the left of the screen */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 300px;
+            height: auto;
+            transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+        }
 
-.ball {
-    position: absolute;
-    top: 60%; /* Adjusted position for smaller screens */
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50px; /* Reduced size for smaller screens */
-    height: auto;
-    transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-}
+        .message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
 
-.message {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1.5rem; /* Scaled down font size */
-    font-weight: bold;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-}
+        .subscriber-count {
+            position: absolute;
+            top: 200px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #f4a261;
+            text-align: center;
+        }
 
-.subscriber-count {
-    position: absolute;
-    top: 10%;
-    font-size: 1.2rem; /* Scaled down font size */
-    font-weight: bold;
-    color: #f4a261;
-    text-align: center;
-}
+        h1 {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+        }
 
-h1 {
-    position: absolute;
-    top: 5%;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.8rem; /* Scaled down font size */
-    font-weight: bold;
-    color: #fff;
-    text-align: center;
-    white-space: nowrap;
-}
+        .firework, .confetti {
+            position: absolute;
+            border-radius: 50%;
+            animation: explode 0.8s ease-out forwards;
+        }
 
-.chat-box {
-    position: absolute;
-    bottom: 10%;
-    left: 5%;
-    width: 90%; /* Scaled down for smaller screens */
-    height: 300px; /* Reduced height for smaller screens */
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
+        .confetti {
+            width: 10px;
+            height: 30px;
+            animation: fall 1.5s ease-out forwards;
+        }
 
-.chat-header {
-    font-weight: bold;
-    font-size: 1.2rem; /* Scaled down font size */
-    margin-bottom: 10px;
-    color: #FF6600;
-}
+        .ball {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: auto;
+            transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+        }
 
-.messages {
-    flex-grow: 1;
-    overflow-y: auto;
-    margin-bottom: 10px;
-    font-size: 0.9rem; /* Scaled down font size */
-    color: #fff;
-}
+ /* Chat box container */
+        .chat-box {
+            position: absolute;
+            top: 80px; /* Position it below the header */
+            left: 20px;
+            width: 300px;
+            height: 400px;
+            background-color: rgba(0, 0, 0, 0.7); /* Transparent background */
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
 
-.chat-input input {
-    width: 70%; /* Adjusted input width */
-    padding: 6px; /* Reduced padding */
-    border: 2px solid #fff;
-    border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    font-size: 0.9rem; /* Scaled down font size */
-}
+        /* Chat header */
+        .chat-header {
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #FF6600; /* Rocket League orange */
+        }
 
-.chat-input button {
-    width: 25%; /* Adjusted button width */
-    background-color: #FF6600;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9rem; /* Scaled down font size */
-}
+        /* Chat messages area */
+        .messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            color: #fff;
+        }
 
-/* Media Query for Small Screens */
-@media (max-width: 768px) {
-    .car {
-        width: 120px; /* Smaller car size */
-    }
+        /* Chat input area */
+        .chat-input {
+            display: flex;
+            justify-content: space-between;
+        }
 
-    .ball {
-        width: 40px; /* Smaller ball size */
-    }
+        .chat-input input {
+            width: 80%;
+            padding: 8px;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
 
-    .message {
-        font-size: 1.2rem; /* Smaller font size */
-    }
+        .chat-input button {
+            width: 18%;
+            background-color: #FF6600; /* Rocket League orange */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-    .subscriber-count {
-        font-size: 1rem; /* Smaller font size */
-        top: 15%;
-    }
-
-    h1 {
-        font-size: 1.5rem; /* Smaller font size */
-    }
-
-    .chat-box {
-        width: 80%; /* Reduced width */
-        height: 250px; /* Reduced height */
-    }
-
-    .chat-header {
-        font-size: 1rem; /* Smaller font size */
-    }
-
-    .messages {
-        font-size: 0.8rem; /* Smaller font size */
-    }
-
-    .chat-input input {
-        font-size: 0.8rem; /* Smaller font size */
-    }
-
-    .chat-input button {
-        font-size: 0.8rem; /* Smaller font size */
-    }
-}
-
-@media (max-width: 480px) {
-    .car {
-        width: 100px; /* Even smaller car size */
-    }
-
-    .ball {
-        width: 30px; /* Even smaller ball size */
-    }
-
-    .message {
-        font-size: 1rem; /* Even smaller font size */
-    }
-
-    .subscriber-count {
-        font-size: 0.9rem; /* Even smaller font size */
-        top: 20%;
-    }
-
-    h1 {
-        font-size: 1.2rem; /* Even smaller font size */
-    }
-
-    .chat-box {
-        width: 95%; /* Full width */
-        height: 200px; /* Smaller height */
-    }
-
-    .chat-header {
-        font-size: 0.9rem; /* Smaller font size */
-    }
-
-    .messages {
-        font-size: 0.7rem; /* Smaller font size */
-    }
-
-    .chat-input input {
-        font-size: 0.7rem; /* Smaller font size */
-    }
-
-    .chat-input button {
-        font-size: 0.7rem; /* Smaller font size */
-    }
-}
+        .chat-input button:hover {
+            background-color: #FF4500; /* Darker shade for hover */
+        }
         
+        @keyframes explode {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(3) translateY(-30px);
+            }
+        }
+
+        @keyframes fall {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(200px) rotate(360deg);
+            }
+        }
+
+        @keyframes ballSpin {
+            0% {
+                transform: rotate(0deg) translateY(0);
+            }
+            100% {
+                transform: rotate(360deg) translateY(-200px);
+            }
+        }
     </style>
 </head>
 <body>
