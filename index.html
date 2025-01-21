@@ -19,7 +19,7 @@
         }
 
         h1 {
-            font-size: 3rem;
+            font-size: 4rem;
             margin: 0;
             animation: glow 2s infinite alternate;
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
@@ -34,6 +34,20 @@
             }
         }
 
+        .subscriber-count {
+            font-size: 3rem;
+            margin-top: 10px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .subscriber-count.animate {
+            transform: scale(1.2);
+        }
+
         .field {
             position: relative;
             width: 80%;
@@ -45,97 +59,58 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             overflow: hidden;
         }
-
-        .car {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 200px;
-            animation: carMove 5s infinite linear;
-        }
-
-        @keyframes carMove {
-            from {
-                transform: translateX(-20px);
-            }
-            to {
-                transform: translateX(1000px);
-            }
-        }
-
-        .ball {
-            position: absolute;
-            top: 50%;
-            left: 70%;
-            transform: translate(-50%, -50%);
-            width: 80px;
-            animation: ballBounce 2s infinite ease-in-out;
-        }
-
-        @keyframes ballBounce {
-            0%, 100% {
-                transform: translate(-50%, -50%);
-            }
-            50% {
-                transform: translate(-50%, -200px);
-            }
-        }
-
-        .subscriber-count {
-            font-size: 1.5rem;
-            margin-top: 10px;
-            text-align: center;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-        }
-
-        .btn-container {
-            margin-top: 20px;
-        }
-
-        button {
-            padding: 10px 20px;
-            border: none;
-            background-color: #FF6600;
-            color: #fff;
-            font-size: 1.2rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #FF4500;
-        }
     </style>
 </head>
 <body>
     <h1>Subscribe for a Rocket League Surprise!</h1>
     <div class="field">
-        <img src="https://i.ibb.co/99nc7xj/Untitled-design-20250119-192011-0000.png" alt="Rocket League Car" class="car" />
-        <img src="https://i.imgflip.com/6kn7pg.png" alt="Rocket League Ball" class="ball" />
+        <!-- Rocket League elements go here -->
     </div>
     <div class="subscriber-count" id="subscriber-count">Subscribers: Loading...</div>
-    <div class="btn-container">
-        <button id="surprise-btn">Trigger Surprise!</button>
-    </div>
 
     <script>
-        const subscriberCount = document.getElementById("subscriber-count");
-        const surpriseBtn = document.getElementById("surprise-btn");
+        const apiKey = "AIzaSyC2U3iNh5DN5dGr_wiCxcYbA8tOxUWn6MQ"; // Replace with your API key
+        const channelId = "UCOp1oJ0_R3R8HP3KbQpEVIg"; // Replace with your channel ID
+        const subscriberCountElement = document.getElementById("subscriber-count");
 
-        surpriseBtn.addEventListener("click", () => {
-            alert("Surprise triggered! Thanks for Subscribing!");
-            // You can trigger animations or sound effects here.
-        });
+        let previousCount = 0;
 
-        // Dummy subscriber count update
-        setInterval(() => {
-            const randomCount = Math.floor(Math.random() * 10000) + 1000;
-            subscriberCount.textContent = `Subscribers: ${randomCount}`;
-        }, 3000);
+        async function fetchSubscriberCount() {
+            try {
+                const response = await fetch(
+                    `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${channelId}&key=${apiKey}`
+                );
+                const data = await response.json();
+                const count = parseInt(data.items[0].statistics.subscriberCount, 10);
+
+                // Update subscriber count display
+                subscriberCountElement.textContent = `Subscribers: ${count}`;
+
+                // Check for new subscription
+                if (count > previousCount) {
+                    triggerAnimation();
+                }
+
+                previousCount = count;
+            } catch (error) {
+                console.error("Error fetching subscriber count:", error);
+            }
+        }
+
+        function triggerAnimation() {
+            subscriberCountElement.classList.add("animate");
+
+            // Remove animation class after a short delay
+            setTimeout(() => {
+                subscriberCountElement.classList.remove("animate");
+            }, 1000);
+        }
+
+        // Poll the API every 10 seconds
+        setInterval(fetchSubscriberCount, 10000);
+
+        // Initial fetch
+        fetchSubscriberCount();
     </script>
 </body>
 </html>
